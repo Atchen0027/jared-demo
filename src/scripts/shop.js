@@ -611,6 +611,7 @@ class NubeterapiaShop {
     this.modal = document.getElementById('product-modal');
     this.modalBackdrop = document.getElementById('product-modal-backdrop');
     this.modalCloseBtn = document.getElementById('modal-close-btn');
+    this.modalBodyLayout = this.modal ? this.modal.querySelector('.modal-body-layout') : null;
 
     this.modalTitle = document.getElementById('modal-product-title');
     this.modalImage = document.getElementById('modal-product-image');
@@ -770,6 +771,11 @@ class NubeterapiaShop {
 
     this.activeProduct = product;
     this.activeModalQty = 1;
+
+    // Resetear posición de scroll al abrir un nuevo producto
+    if (this.modalBodyLayout) {
+      this.modalBodyLayout.scrollTop = 0;
+    }
 
     // Obtener variantes disponibles para este producto
     const variants = this.getProductVariants(product);

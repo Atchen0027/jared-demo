@@ -591,4 +591,238 @@
     background-color: var(--color-sage);
     color: #FFFFFF;
   }
+
+  /* ---------------------------------------------------------------------------
+     ADAPTACIÓN MÓVIL OPTIMIZADA: DETALLES DE PRODUCTO
+     --------------------------------------------------------------------------- */
+  @media (max-width: 767px) {
+    .product-modal {
+      width: 94%;
+      max-width: 440px;
+      max-height: 86dvh;
+      height: 86dvh;
+      transform: translate(-50%, -48%) scale(0.97);
+    }
+
+    .product-modal.is-active {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-dialog-inner {
+      height: 100%;
+      max-height: 86dvh;
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .modal-close-btn {
+      top: 0.65rem;
+      right: 0.65rem;
+      width: 32px;
+      height: 32px;
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      z-index: 30;
+    }
+
+    .modal-body-layout {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      max-height: none;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    /* Galería compacta: la foto no devora la pantalla */
+    .modal-gallery-col {
+      padding: 0.85rem 1rem 0.6rem;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      background-color: var(--color-cream);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .modal-main-image-container {
+      max-width: 175px;
+      max-height: 175px;
+      margin: 0 auto;
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 12px rgba(36, 32, 28, 0.06);
+    }
+
+    .zoom-indicator-btn {
+      display: none;
+    }
+
+    .modal-thumbnails-strip {
+      gap: 0.35rem;
+    }
+
+    :global(.modal-thumb-btn) {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Información detallada legible y compacta */
+    .modal-info-col {
+      padding: 0.85rem 1.15rem 0.85rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header-meta {
+      gap: 0.45rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .modal-cat-badge {
+      font-size: 0.72rem;
+    }
+
+    .modal-stock-badge {
+      font-size: 0.68rem;
+      padding: 0.15rem 0.45rem;
+    }
+
+    .modal-product-title {
+      font-size: 1.35rem;
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+      padding-right: 0;
+    }
+
+    .modal-price-weight-row {
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .modal-product-price {
+      font-size: 1.45rem;
+    }
+
+    .modal-product-weight {
+      font-size: 0.82rem;
+    }
+
+    /* Selector de Variantes (Tamaño / Peso) */
+    .modal-variants-block {
+      padding: 0.65rem 0.85rem;
+      margin-bottom: 0.75rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .modal-variants-header {
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-variants-title {
+      font-size: 0.72rem;
+    }
+
+    .selected-variant-label {
+      font-size: 0.72rem;
+      padding: 0.1rem 0.45rem;
+    }
+
+    .modal-variants-chips {
+      gap: 0.35rem;
+    }
+
+    :global(.variant-chip-btn) {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.76rem;
+      gap: 0.35rem;
+    }
+
+    :global(.variant-chip-price) {
+      font-size: 0.7rem;
+      padding: 0.08rem 0.32rem;
+    }
+
+    .modal-promo-box {
+      padding: 0.4rem 0.65rem;
+      font-size: 0.78rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-product-description {
+      font-size: 0.86rem;
+      line-height: 1.5;
+      margin-bottom: 0.85rem;
+      color: var(--color-text-body);
+    }
+
+    .modal-section-block {
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-subheading {
+      font-size: 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+
+    :global(.modal-benefit-item) {
+      font-size: 0.8rem;
+      gap: 0.35rem;
+    }
+
+    :global(.ingredient-chip) {
+      font-size: 0.72rem;
+      padding: 0.18rem 0.45rem;
+    }
+
+    .modal-skin-type-note {
+      font-size: 0.78rem;
+      padding: 0.45rem 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+
+    /* Barra de compra fija en la parte inferior para fácil acceso */
+    .modal-purchase-footer {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #FFFFFF;
+      padding: 0.65rem 0 0.25rem;
+      margin-top: auto;
+      border-top: 1px solid var(--color-border);
+      box-shadow: 0 -4px 12px rgba(36, 32, 28, 0.05);
+      z-index: 10;
+    }
+
+    .quantity-picker {
+      height: 38px;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 38px;
+      font-size: 1.1rem;
+    }
+
+    #modal-qty-input {
+      width: 28px;
+      font-size: 0.95rem;
+    }
+
+    .modal-add-cart-btn {
+      padding: 0.65rem 0.95rem;
+      font-size: 0.88rem;
+      gap: 0.35rem;
+    }
+
+    .modal-add-cart-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+  }
 </style>
