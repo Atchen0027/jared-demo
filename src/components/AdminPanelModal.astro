@@ -48,26 +48,48 @@ import { storeConfig } from '../data/storeConfig.js';
     <div class="admin-demo-alert">
       <span class="alert-icon">💡</span>
       <div class="alert-text">
-        <strong>Propuesta de Administración para el Cliente:</strong>
-        <p>
-          Esta interfaz simula el panel privado definitivo que se programará en <strong>PHP</strong>. Permite al cliente visualizar cómo gestionará su stock, cambiará precios, consultará pedidos y ajustará las tarifas de envío de forma sencilla e intuitiva.
+        <div class="alert-title-row">
+          <strong>Panel de Control para el Cliente (Fase PHP)</strong>
+          <span class="alert-status-tag">Demo Interactiva</span>
+        </div>
+        <p class="alert-desc">
+          Elige cualquiera de las <strong>4 opciones</strong> de abajo para explorar la gestión de inventario, modificar precios simulados, revisar pedidos de WhatsApp y configurar tarifas de envío.
         </p>
       </div>
     </div>
 
-    <!-- Pestañas de navegación del panel -->
+    <!-- Pestañas de navegación del panel (100% visibles en móvil) -->
     <nav class="admin-nav-tabs" role="tablist" aria-label="Secciones del panel de administración">
       <button type="button" role="tab" class="admin-tab is-active" data-admin-tab="dashboard" aria-selected="true">
-        📊 Resumen & Métricas
+        <span class="tab-icon">📊</span>
+        <div class="admin-tab-text-wrap">
+          <span class="tab-title">Resumen</span>
+          <span class="tab-subtext">Métricas & Ventas</span>
+        </div>
       </button>
+
       <button type="button" role="tab" class="admin-tab" data-admin-tab="products" aria-selected="false">
-        🧼 Catálogo & Precios ({products.length})
+        <span class="tab-icon">🧼</span>
+        <div class="admin-tab-text-wrap">
+          <span class="tab-title">Catálogo</span>
+          <span class="tab-subtext">Stock & Precios ({products.length})</span>
+        </div>
       </button>
+
       <button type="button" role="tab" class="admin-tab" data-admin-tab="orders" aria-selected="false">
-        💬 Pedidos WhatsApp (Recientes)
+        <span class="tab-icon">💬</span>
+        <div class="admin-tab-text-wrap">
+          <span class="tab-title">Pedidos</span>
+          <span class="tab-subtext">WhatsApp Recientes</span>
+        </div>
       </button>
+
       <button type="button" role="tab" class="admin-tab" data-admin-tab="settings" aria-selected="false">
-        ⚙️ Configuración & Envíos
+        <span class="tab-icon">⚙️</span>
+        <div class="admin-tab-text-wrap">
+          <span class="tab-title">Ajustes</span>
+          <span class="tab-subtext">Envíos & Tienda</span>
+        </div>
       </button>
     </nav>
 
@@ -401,6 +423,16 @@ import { storeConfig } from '../data/storeConfig.js';
     border: 1px solid var(--color-border);
   }
 
+  @media (max-width: 767px) {
+    .admin-modal {
+      width: 96%;
+      max-height: 94vh;
+    }
+    .admin-modal-inner {
+      max-height: 94vh;
+    }
+  }
+
   /* Topbar */
   .admin-topbar {
     background-color: #211D19;
@@ -412,10 +444,22 @@ import { storeConfig } from '../data/storeConfig.js';
     border-bottom: 1px solid #363028;
   }
 
+  @media (max-width: 767px) {
+    .admin-topbar {
+      padding: 0.75rem 1rem;
+    }
+  }
+
   .admin-brand-info {
     display: flex;
     align-items: center;
     gap: 0.85rem;
+  }
+
+  @media (max-width: 767px) {
+    .admin-brand-info {
+      gap: 0.55rem;
+    }
   }
 
   .admin-brand-logo {
@@ -429,6 +473,17 @@ import { storeConfig } from '../data/storeConfig.js';
     color: #8FA48C;
   }
 
+  @media (max-width: 767px) {
+    .admin-brand-logo {
+      width: 30px;
+      height: 30px;
+    }
+    .admin-brand-logo svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
   .admin-topbar-title {
     font-family: var(--font-sans);
     font-size: 1.15rem;
@@ -437,9 +492,21 @@ import { storeConfig } from '../data/storeConfig.js';
     line-height: 1.2;
   }
 
+  @media (max-width: 767px) {
+    .admin-topbar-title {
+      font-size: 0.95rem;
+    }
+  }
+
   .admin-topbar-sub {
     font-size: 0.785rem;
     color: #A3998E;
+  }
+
+  @media (max-width: 767px) {
+    .admin-topbar-sub {
+      display: none;
+    }
   }
 
   .admin-topbar-actions {
@@ -475,45 +542,173 @@ import { storeConfig } from '../data/storeConfig.js';
   .admin-demo-alert {
     background-color: #FAF4E6;
     border-bottom: 1px solid #F0E2C1;
-    padding: 0.85rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     display: flex;
+    align-items: flex-start;
     gap: 0.75rem;
     font-size: 0.825rem;
     color: #6C5420;
     line-height: 1.45;
   }
 
-  .alert-icon {
-    font-size: 1.2rem;
+  .alert-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.25rem;
   }
 
-  /* Pestañas */
+  .alert-status-tag {
+    background-color: #E6A23C;
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .alert-desc {
+    margin: 0;
+    font-size: 0.785rem;
+    color: #7A6229;
+  }
+
+  .alert-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Pestañas de administración: 100% VISIBLES EN MÓVIL (Grid 2x2) */
   .admin-nav-tabs {
-    display: flex;
-    background-color: var(--color-cream);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.45rem;
+    padding: 0.65rem 0.85rem;
+    background-color: #F4EFE6;
     border-bottom: 1px solid var(--color-border);
-    overflow-x: auto;
-    padding: 0 1.25rem;
   }
 
   .admin-tab {
-    padding: 0.85rem 1.25rem;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    border-bottom: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--color-border);
+    background-color: #FFFFFF;
+    cursor: pointer;
     transition: all var(--transition-fast);
-    white-space: nowrap;
+    text-align: left;
   }
 
   .admin-tab:hover {
-    color: var(--color-text-main);
+    border-color: var(--color-sage-light);
+    background-color: #FAF7F2;
+    transform: translateY(-1px);
   }
 
   .admin-tab.is-active {
-    color: var(--color-sage);
-    border-bottom-color: var(--color-sage);
-    background-color: #FFFFFF;
+    background-color: var(--color-sage);
+    color: #FFFFFF;
+    border-color: var(--color-sage);
+    box-shadow: 0 3px 8px rgba(86, 110, 83, 0.28);
+  }
+
+  .admin-tab .tab-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .admin-tab-text-wrap {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    overflow: hidden;
+  }
+
+  .admin-tab .tab-title {
+    font-size: 0.825rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+  }
+
+  .admin-tab .tab-subtext {
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .admin-tab.is-active .tab-title,
+  .admin-tab.is-active .tab-subtext {
+    color: #FFFFFF;
+  }
+
+  @media (min-width: 768px) {
+    .admin-nav-tabs {
+      display: flex;
+      grid-template-columns: none;
+      background-color: var(--color-cream);
+      border-bottom: 1px solid var(--color-border);
+      overflow-x: auto;
+      padding: 0 1.25rem;
+      gap: 0;
+    }
+
+    .admin-tab {
+      display: inline-flex;
+      border-radius: 0;
+      border: none;
+      border-bottom: 3px solid transparent;
+      background-color: transparent;
+      padding: 0.85rem 1.25rem;
+      box-shadow: none;
+    }
+
+    .admin-tab:hover {
+      background-color: rgba(255, 255, 255, 0.6);
+      transform: none;
+    }
+
+    .admin-tab.is-active {
+      background-color: #FFFFFF;
+      color: var(--color-sage);
+      border-bottom-color: var(--color-sage);
+      box-shadow: none;
+    }
+
+    .admin-tab-text-wrap {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .admin-tab .tab-title {
+      font-size: 0.88rem;
+    }
+
+    .admin-tab.is-active .tab-title {
+      color: var(--color-sage);
+    }
+
+    .admin-tab .tab-subtext {
+      font-size: 0.785rem;
+    }
+
+    .admin-tab .tab-subtext::before {
+      content: " • ";
+      opacity: 0.6;
+    }
+
+    .admin-tab.is-active .tab-subtext {
+      color: var(--color-text-muted);
+    }
   }
 
   /* Cuerpo */
@@ -524,23 +719,25 @@ import { storeConfig } from '../data/storeConfig.js';
     background-color: #FAF7F2;
   }
 
+  @media (max-width: 767px) {
+    .admin-body-content {
+      padding: 0.85rem;
+    }
+  }
+
   /* Métricas */
   .metrics-cards-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-bottom: 1.75rem;
-  }
-
-  @media (min-width: 600px) {
-    .metrics-cards-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.55rem;
+    margin-bottom: 1.25rem;
   }
 
   @media (min-width: 992px) {
     .metrics-cards-grid {
       grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
     }
   }
 
@@ -548,14 +745,29 @@ import { storeConfig } from '../data/storeConfig.js';
     background-color: #FFFFFF;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: 1.25rem;
+    padding: 0.85rem 0.75rem;
     display: flex;
-    gap: 1rem;
+    gap: 0.65rem;
+    align-items: center;
     box-shadow: var(--shadow-xs);
   }
 
+  @media (min-width: 768px) {
+    .metric-card {
+      padding: 1.25rem;
+      gap: 1rem;
+    }
+  }
+
   .metric-icon {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .metric-icon {
+      font-size: 1.75rem;
+    }
   }
 
   .metric-data {
@@ -645,6 +857,15 @@ import { storeConfig } from '../data/storeConfig.js';
     margin-bottom: 1.25rem;
   }
 
+  @media (max-width: 640px) {
+    .pane-action-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+  }
+
   .pane-title {
     font-family: var(--font-sans);
     font-size: 1.15rem;
@@ -652,9 +873,21 @@ import { storeConfig } from '../data/storeConfig.js';
     color: var(--color-text-main);
   }
 
+  @media (max-width: 640px) {
+    .pane-title {
+      font-size: 1rem;
+    }
+  }
+
   .pane-desc {
     font-size: 0.85rem;
     color: var(--color-text-muted);
+  }
+
+  @media (max-width: 640px) {
+    .pane-desc {
+      font-size: 0.785rem;
+    }
   }
 
   .table-responsive-wrapper {
@@ -663,6 +896,7 @@ import { storeConfig } from '../data/storeConfig.js';
     border-radius: var(--radius-md);
     overflow-x: auto;
     box-shadow: var(--shadow-xs);
+    -webkit-overflow-scrolling: touch;
   }
 
   .admin-data-table {
@@ -670,6 +904,7 @@ import { storeConfig } from '../data/storeConfig.js';
     border-collapse: collapse;
     font-size: 0.88rem;
     text-align: left;
+    min-width: 580px;
   }
 
   .admin-data-table th {
@@ -678,12 +913,21 @@ import { storeConfig } from '../data/storeConfig.js';
     font-weight: 600;
     color: var(--color-text-main);
     border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
   }
 
   .admin-data-table td {
     padding: 0.85rem 1rem;
     border-bottom: 1px solid var(--color-border-light);
     color: var(--color-text-body);
+  }
+
+  @media (max-width: 640px) {
+    .admin-data-table th,
+    .admin-data-table td {
+      padding: 0.65rem 0.75rem;
+      font-size: 0.825rem;
+    }
   }
 
   .table-product-item {
@@ -698,6 +942,14 @@ import { storeConfig } from '../data/storeConfig.js';
     border-radius: var(--radius-sm);
     object-fit: cover;
     background-color: var(--color-cream);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .table-prod-img {
+      width: 36px;
+      height: 36px;
+    }
   }
 
   .table-promo-sub {
