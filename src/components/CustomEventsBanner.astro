@@ -1,0 +1,213 @@
+---
+import { storeConfig } from '../data/storeConfig.js';
+---
+
+<section class="custom-events-section" aria-label="Atención personalizada y pedidos para eventos">
+  <div class="container">
+    <div class="custom-events-card">
+      <!-- Tag superior -->
+      <div class="events-tag-wrap">
+        <span class="events-tag-badge">
+          <svg class="events-tag-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+          </svg>
+          <span>Atención Personalizada de Artesano a Persona</span>
+        </span>
+      </div>
+
+      <!-- Título principal -->
+      <h2 class="events-heading">
+        ¿Dudas con los ingredientes o necesitas detalles para tu boda o evento?
+      </h2>
+
+      <!-- Párrafo descriptivo -->
+      <p class="events-description">
+        Escríbenos directamente por WhatsApp. Te ayudamos a seleccionar los jabones ideales según tu tipo de dermis o preparamos lotes personalizados con empaquetado botánico y sellos de cera en Tenerife.
+      </p>
+
+      <!-- Fila de acción y estado -->
+      <div class="events-action-row">
+        <a 
+          href={`https://wa.me/${storeConfig.whatsAppNumber}?text=Hola%20Nubeterapia%2C%20tengo%20dudas%20sobre%20los%20ingredientes%20o%20quisiera%20detalles%20para%20un%20evento%20o%20boda.`}
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="events-cta-btn"
+          aria-label="Abrir chat de WhatsApp para consultas o eventos"
+        >
+          <svg class="events-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+          </svg>
+          <span>Abrir WhatsApp ({storeConfig.phone})</span>
+        </a>
+
+        <div class="events-status-indicator">
+          <span class="status-dot-pulse"></span>
+          <span>Respuesta habitual en menos de 15 minutos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .custom-events-section {
+    padding: 3rem 0;
+    background-color: var(--color-background);
+  }
+
+  .custom-events-card {
+    background: linear-gradient(135deg, #163328 0%, #1A3C2F 100%);
+    border-radius: 24px;
+    padding: 3.5rem 3.5rem 3.25rem;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 16px 36px rgba(22, 51, 40, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Suave brillo botánico de fondo */
+  .custom-events-card::after {
+    content: "";
+    position: absolute;
+    bottom: -60px;
+    right: -40px;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(253, 179, 130, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .events-tag-wrap {
+    margin-bottom: 1.25rem;
+  }
+
+  .events-tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.02em;
+  }
+
+  .events-tag-icon {
+    color: #FDB382;
+  }
+
+  .events-heading {
+    font-family: var(--font-serif);
+    font-size: 2.15rem;
+    font-weight: 700;
+    line-height: 1.24;
+    color: #FFFFFF;
+    max-width: 820px;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .events-description {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: #D6DFD9;
+    max-width: 780px;
+    margin-bottom: 2rem;
+  }
+
+  .events-action-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .events-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background-color: #FDB382;
+    color: #163328;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.85rem 1.65rem;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(253, 179, 130, 0.28);
+    transition: all var(--transition-fast);
+  }
+
+  .events-cta-btn:hover {
+    background-color: #FFE0CD;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(253, 179, 130, 0.38);
+    color: #163328;
+  }
+
+  .events-btn-icon {
+    color: #163328;
+  }
+
+  .events-status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: #D6DFD9;
+  }
+
+  .status-dot-pulse {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #38D368;
+    box-shadow: 0 0 0 3px rgba(56, 211, 104, 0.25);
+    display: inline-block;
+  }
+
+  /* Responsive Móvil */
+  @media (max-width: 767px) {
+    .custom-events-section {
+      padding: 2rem 0;
+    }
+
+    .custom-events-card {
+      padding: 1.85rem 1.35rem;
+      border-radius: 20px;
+    }
+
+    .events-heading {
+      font-size: 1.45rem;
+      line-height: 1.28;
+      margin-bottom: 0.85rem;
+    }
+
+    .events-description {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+    }
+
+    .events-action-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .events-cta-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .events-status-indicator {
+      font-size: 0.78rem;
+    }
+  }
+</style>

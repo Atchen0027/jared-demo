@@ -4,6 +4,7 @@ import HeroCarousel from '../components/HeroCarousel.astro';
 import AboutUs from '../components/AboutUs.astro';
 import FeaturedCategories from '../components/FeaturedCategories.astro';
 import Catalog from '../components/Catalog.astro';
+import CustomEventsBanner from '../components/CustomEventsBanner.astro';
 import ProductModal from '../components/ProductModal.astro';
 import CartDrawer from '../components/CartDrawer.astro';
 import WhatsAppPreviewModal from '../components/WhatsAppPreviewModal.astro';
@@ -104,16 +105,19 @@ const schemaOrgData = {
     <main>
       <HeroCarousel />
 
-      <!-- 3. Quiénes Somos (Historia y Esencia) -->
-      <AboutUs />
-
-      <!-- 4. Categorías Destacadas (Bloques Alternados) -->
+      <!-- 3. Categorías Destacadas (Bloques Alternados) -->
       <FeaturedCategories />
 
-      <!-- 5. Catálogo de Productos con Filtros y Buscador -->
+      <!-- 4. Catálogo de Productos con Filtros y Buscador -->
       <Catalog />
 
-      <!-- 6. Pilares de Calidad y Artesanía -->
+      <!-- 5. Atención Personalizada y Eventos / Bodas (Banner Verde) -->
+      <CustomEventsBanner />
+
+      <!-- 6. Quiénes Somos (Nuestra Esencia y Obrador Artesanal) -->
+      <AboutUs />
+
+      <!-- 7. Pilares de Calidad y Artesanía -->
       <BenefitsBanner />
     </main>
 

@@ -3,108 +3,103 @@ import { storeConfig } from '../data/storeConfig.js';
 import { withBase } from '../utils/assets.js';
 ---
 
-<section class="about-us-section" id="quienes-somos" aria-label="Quiénes somos y nuestra historia">
+<section class="about-us-section" id="quienes-somos" aria-label="Quiénes somos y nuestra esencia">
   <div class="container">
     <div class="about-grid">
-      <!-- Columna Visual: Composición de imágenes botánicas y sello artesanal -->
+      <!-- Columna Izquierda: Composición Visual con Fotos del Obrador y Tarjeta 3x10€ -->
       <div class="about-visual-col">
-        <div class="about-images-composition">
-          <div class="about-img-main-card">
+        <div class="about-mosaic-grid">
+          <!-- Foto vertical artesanal -->
+          <div class="mosaic-tall-card">
             <img 
-              src={withBase("/images/about/taller-artesanal-nubeterapia.jpg")} 
-              alt="Elaboración artesanal de jabones Nubeterapia en Tenerife" 
+              src={withBase("/images/about/artesano-cortando-jabon.jpg")} 
+              alt="Corte artesanal de barra de jabón natural en obrador de Tenerife" 
               loading="lazy"
-              class="about-img-main"
+              class="mosaic-img"
             />
-            <div class="about-img-overlay" aria-hidden="true"></div>
           </div>
 
-          <!-- Tarjeta flotante con sello de Canarias -->
-          <div class="about-stamp-card">
-            <div class="stamp-icon">🌴</div>
-            <div class="stamp-text">
-              <strong>Tenerife, Canarias</strong>
-              <span>Artesanía local sostenible</span>
+          <!-- Columna derecha del mosaico -->
+          <div class="mosaic-subcol">
+            <!-- Foto de extractos botánicos y aloe -->
+            <div class="mosaic-square-card">
+              <img 
+                src={withBase("/images/about/extractos-aloe-miel.jpg")} 
+                alt="Extractos botánicos vivos, aloe vera canario y aceites vírgenes" 
+                loading="lazy"
+                class="mosaic-img"
+              />
             </div>
-          </div>
 
-          <!-- Tarjeta flotante con valores -->
-          <div class="about-stat-card">
-            <span class="stat-number">100%</span>
-            <span class="stat-label">Glicerina vegetal & extractos vivos</span>
+            <!-- Tarjeta Tarifa Especial 3 por 10€ -->
+            <div class="mosaic-promo-card">
+              <span class="promo-card-tag">TARIFA ESPECIAL</span>
+              <h3 class="promo-card-price">3 por 10€</h3>
+              <p class="promo-card-sub">
+                Elige tus 3 variedades predilectas a 3.33€/unidad.
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Columna de Contenido Editorial -->
+      <!-- Columna Derecha: Contenido Editorial y Propósito de Marca -->
       <div class="about-content-col">
-        <span class="section-tagline">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9s-9 4.03-9 9a9 9 0 0 0 9 9Z"></path>
-            <path d="M12 7v5l3 3"></path>
-          </svg>
-          Nuestra Esencia
-        </span>
+        <div class="about-tag-wrap">
+          <span class="about-essence-badge">
+            <span class="badge-icon">🌱</span>
+            <span>NUESTRA ESENCIA</span>
+          </span>
+        </div>
 
-        <h2 class="about-heading">Quiénes Somos</h2>
-        <p class="about-lead">
-          «Nacimos con un propósito simple y honesto: devolver a tu piel la calma y pureza que la rutina diaria le quita.»
+        <h2 class="about-heading">
+          Nacimos con un propósito simple y honesto: devolver a tu piel la calma y pureza que la rutina diaria le quita.
+        </h2>
+
+        <p class="about-paragraph">
+          En <strong>{storeConfig.name}</strong> creemos que el momento del baño no debe ser un trámite acelerado, sino un ritual sagrado de desconexión. En nuestro pequeño obrador en La Orotava (Tenerife), combinamos la glicerina vegetal pura con aceites vírgenes, extractos autóctonos como el aloe canario y flores cosechadas con respeto.
         </p>
 
         <p class="about-paragraph">
-          En <strong>{storeConfig.name}</strong> creemos que el momento del baño no debe ser un trámite, sino un ritual de desconexión. En nuestro pequeño obrador artesanal en <strong>Tenerife</strong>, combinamos glicerina vegetal pura de la máxima calidad con aceites esenciales botánicos, mantecas de karité sin refinar y plantas aromáticas cosechadas bajo el sol de Canarias.
+          Cada barra está cortada, moldeada y sellada a mano con caricia absoluta. Sin prisas industriales, sin conservantes innecesarios. Solo cosmética que se siente viva, hace una espuma untuosa y nutre desde el primer contacto con el agua.
         </p>
 
-        <p class="about-paragraph">
-          Cada jabón está cortado, formulado y sellado a mano con dedicación absoluta. Sin prisas industriales, sin sulfatos agresivos ni derivados petroquímicos. Solo cosmética que se siente, se nota y enamora desde el primer contacto con el agua.
-        </p>
-
-        <!-- Puntos fuertes de la marca -->
-        <div class="about-pillars-grid">
-          <div class="pillar-box">
-            <span class="pillar-icon">🌿</span>
-            <div class="pillar-info">
-              <h4>Fórmulas Limpias</h4>
-              <p>Sin parabenos, sulfatos ni microplásticos nocivos.</p>
+        <!-- Tarjetas de valores / pilares -->
+        <div class="about-feature-cards">
+          <div class="feature-card">
+            <div class="feature-card-header">
+              <span class="feature-icon">🤝</span>
+              <h4 class="feature-title">Trato Cercano y Real</h4>
             </div>
+            <p class="feature-desc">
+              Te asesoramos por WhatsApp según tu tipo de piel antes de comprar.
+            </p>
           </div>
 
-          <div class="pillar-box">
-            <span class="pillar-icon">🤲</span>
-            <div class="pillar-info">
-              <h4>Lotes Pequeños</h4>
-              <p>Hechos a mano con control minucioso de cada barra.</p>
+          <div class="feature-card">
+            <div class="feature-card-header">
+              <span class="feature-icon">📦</span>
+              <h4 class="feature-title">Lotes Pequeños</h4>
             </div>
-          </div>
-
-          <div class="pillar-box">
-            <span class="pillar-icon">🫧</span>
-            <div class="pillar-info">
-              <h4>Glicerina Pura</h4>
-              <p>Respeta la hidratación natural de las pieles más sensibles.</p>
-            </div>
-          </div>
-
-          <div class="pillar-box">
-            <span class="pillar-icon">📦</span>
-            <div class="pillar-info">
-              <h4>Trato Cercano</h4>
-              <p>Atención directa y pedidos personalizados por WhatsApp.</p>
-            </div>
+            <p class="feature-desc">
+              Garantía de máxima frescura en cada ingrediente activo botánico.
+            </p>
           </div>
         </div>
 
-        <div class="about-cta-row">
-          <a href="#categorias" class="btn btn-primary">
-            <span>Conoce Nuestras Colecciones</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
+        <!-- Botón de acción con WhatsApp -->
+        <div class="about-cta-wrap">
+          <a 
+            href={`https://wa.me/${storeConfig.whatsAppNumber}?text=Hola%20Nubeterapia%2C%20quisiera%20asesoramiento%20sobre%20vuestros%20jabones%20artesanales.`}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="about-artisan-btn"
+            aria-label="Hablar directamente con el artesano por WhatsApp"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
             </svg>
-          </a>
-
-          <a href="#catalogo" class="btn btn-secondary">
-            Ir al Catálogo
+            <span>Hablar con el artesano ({storeConfig.phone})</span>
           </a>
         </div>
       </div>
@@ -114,213 +109,267 @@ import { withBase } from '../utils/assets.js';
 
 <style>
   .about-us-section {
-    padding: 5.5rem 0 4.5rem;
-    background-color: #FFFFFF;
-    border-bottom: 1px solid var(--color-border);
-    position: relative;
-    overflow: hidden;
+    padding: 5rem 0;
+    background-color: var(--color-background);
   }
 
   .about-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 3.5rem;
     align-items: center;
   }
 
   @media (min-width: 992px) {
     .about-grid {
-      grid-template-columns: 1fr 1.25fr;
+      grid-template-columns: 1fr 1.15fr;
       gap: 4.5rem;
     }
   }
 
-  /* Columna visual */
-  .about-visual-col {
-    position: relative;
+  /* Mosaico visual */
+  .about-mosaic-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 1.15rem;
+    align-items: stretch;
   }
 
-  .about-images-composition {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  .about-img-main-card {
-    position: relative;
-    border-radius: var(--radius-lg);
+  .mosaic-tall-card {
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--color-border);
-    aspect-ratio: 4 / 5;
-    background-color: var(--color-sand);
+    box-shadow: 0 10px 28px rgba(22, 51, 40, 0.1);
+    background-color: var(--color-cream);
+    display: flex;
   }
 
-  .about-img-main {
+  .mosaic-subcol {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .mosaic-square-card {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(22, 51, 40, 0.08);
+    background-color: var(--color-cream);
+    aspect-ratio: 1 / 1;
+    display: flex;
+  }
+
+  .mosaic-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.5s ease;
   }
 
-  .about-images-composition:hover .about-img-main {
+  .mosaic-tall-card:hover .mosaic-img,
+  .mosaic-square-card:hover .mosaic-img {
     transform: scale(1.04);
   }
 
-  .about-img-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(36, 32, 28, 0.3) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  /* Tarjetas flotantes */
-  .about-stamp-card {
-    position: absolute;
-    bottom: -1.25rem;
-    left: -1rem;
-    background-color: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.85rem 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    box-shadow: var(--shadow-md);
-    z-index: 2;
-  }
-
-  .stamp-icon {
-    font-size: 1.75rem;
-  }
-
-  .stamp-text {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .stamp-text strong {
-    font-size: 0.95rem;
-    color: var(--color-text-main);
-  }
-
-  .stamp-text span {
-    font-size: 0.785rem;
-    color: var(--color-sage);
-    font-weight: 500;
-  }
-
-  .about-stat-card {
-    position: absolute;
-    top: -1rem;
-    right: -1rem;
-    background-color: var(--color-sage);
+  /* Tarjeta Tarifa Especial */
+  .mosaic-promo-card {
+    background-color: #163328;
     color: #FFFFFF;
-    border-radius: var(--radius-md);
-    padding: 1rem 1.25rem;
+    border-radius: 18px;
+    padding: 1.35rem 1.25rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    box-shadow: var(--shadow-md);
-    z-index: 2;
-    max-width: 150px;
+    justify-content: center;
+    box-shadow: 0 10px 24px rgba(22, 51, 40, 0.18);
+    flex: 1;
   }
 
-  .stat-number {
-    font-family: var(--font-serif);
-    font-size: 2rem;
+  .promo-card-tag {
+    font-size: 0.7rem;
     font-weight: 700;
-    line-height: 1;
+    color: #FDB382;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     margin-bottom: 0.25rem;
   }
 
-  .stat-label {
-    font-size: 0.72rem;
-    line-height: 1.3;
-    opacity: 0.92;
-  }
-
-  /* Columna de contenido */
-  .about-content-col {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .about-heading {
-    font-size: clamp(2.2rem, 3.8vw, 3rem);
-    font-weight: 600;
-    color: var(--color-text-main);
-    line-height: 1.15;
-    margin-bottom: 0.75rem;
-  }
-
-  .about-lead {
+  .promo-card-price {
     font-family: var(--font-serif);
-    font-size: 1.25rem;
-    font-style: italic;
-    color: var(--color-terracotta);
-    line-height: 1.45;
-    margin-bottom: 1.5rem;
-  }
-
-  .about-paragraph {
-    font-size: 0.98rem;
-    line-height: 1.7;
-    color: var(--color-text-body);
-    margin-bottom: 1.15rem;
-  }
-
-  .about-pillars-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin: 1.5rem 0 2.25rem;
-  }
-
-  @media (min-width: 576px) {
-    .about-pillars-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .pillar-box {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    background-color: var(--color-cream);
-    border: 1px solid var(--color-border);
-    padding: 0.9rem 1.1rem;
-    border-radius: var(--radius-md);
-  }
-
-  .pillar-icon {
-    font-size: 1.35rem;
-    line-height: 1;
-  }
-
-  .pillar-info h4 {
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 1.65rem;
     font-weight: 700;
-    color: var(--color-text-main);
-    margin-bottom: 0.2rem;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin: 0.15rem 0 0.35rem;
   }
 
-  .pillar-info p {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
+  .promo-card-sub {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.82);
     line-height: 1.4;
     margin: 0;
   }
 
-  .about-cta-row {
+  /* Columna de contenido */
+  .about-tag-wrap {
+    margin-bottom: 0.85rem;
+  }
+
+  .about-essence-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: rgba(198, 146, 20, 0.12);
+    color: #7A6230;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .badge-icon {
+    font-size: 0.85rem;
+  }
+
+  .about-heading {
+    font-family: var(--font-serif);
+    font-size: 2.15rem;
+    color: #163328;
+    line-height: 1.26;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-paragraph {
+    font-size: 0.95rem;
+    line-height: 1.68;
+    color: var(--color-text-body);
+    margin-bottom: 1rem;
+  }
+
+  .about-paragraph strong {
+    color: var(--color-text-main);
+  }
+
+  /* Tarjetas de características */
+  .about-feature-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.75rem 0 2rem;
+  }
+
+  @media (min-width: 580px) {
+    .about-feature-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .feature-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 1.15rem 1.25rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(22, 51, 40, 0.08);
+  }
+
+  .feature-card-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .feature-icon {
+    font-size: 1.1rem;
+  }
+
+  .feature-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #163328;
+    margin: 0;
+  }
+
+  .feature-desc {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Botón CTA artesano */
+  .about-cta-wrap {
+    display: flex;
+  }
+
+  .about-artisan-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background-color: #163328;
+    color: #FFFFFF;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 0.85rem 1.65rem;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(22, 51, 40, 0.22);
+    transition: all var(--transition-fast);
+  }
+
+  .about-artisan-btn:hover {
+    background-color: #244C3D;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(22, 51, 40, 0.3);
+  }
+
+  /* Responsive Móvil */
+  @media (max-width: 767px) {
+    .about-us-section {
+      padding: 3rem 0;
+    }
+
+    .about-heading {
+      font-size: 1.45rem;
+      line-height: 1.28;
+      margin-bottom: 1rem;
+    }
+
+    .about-paragraph {
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .about-mosaic-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .mosaic-promo-card {
+      padding: 1rem 0.85rem;
+    }
+
+    .promo-card-price {
+      font-size: 1.35rem;
+    }
+
+    .promo-card-sub {
+      font-size: 0.72rem;
+    }
+
+    .about-artisan-btn {
+      width: 100%;
+      justify-content: center;
+      font-size: 0.88rem;
+    }
   }
 </style>
