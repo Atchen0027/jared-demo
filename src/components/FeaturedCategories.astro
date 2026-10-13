@@ -1,0 +1,742 @@
+---
+import { categories } from '../data/categories.js';
+---
+
+<section class="categories-scroll-track" id="categorias" aria-label="Colecciones y categorías destacadas con giro interactivo">
+  <div class="sticky-deck-viewport">
+    <div class="container deck-container">
+      
+      <!-- Cabecera de la sección fija con indicadores de giro -->
+      <div class="deck-top-bar">
+        <div class="deck-header-text">
+          <span class="section-tagline">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+            Colecciones en 3D
+          </span>
+          <h2 class="deck-main-title">Gira nuestras colecciones botánicas</h2>
+        </div>
+
+        <!-- Selector directo de tarjeta (Pestañas interactivas) -->
+        <div class="deck-selector-nav" role="tablist" aria-label="Selector de colección botánica">
+          {categories.map((cat, idx) => (
+            <button 
+              type="button" 
+              role="tab"
+              class={`deck-step-btn ${idx === 0 ? 'is-active' : ''}`}
+              data-card-step={idx}
+              aria-selected={idx === 0 ? 'true' : 'false'}
+              aria-label={`Ver tarjeta ${idx + 1}: ${cat.name}`}
+            >
+              <span class="step-num">0{idx + 1}</span>
+              <span class="step-name">{cat.name.split(' ')[0]} {cat.name.split(' ')[1] || ''}</span>
+            </button>
+          ))}
+        </div>
+
+        <!-- Indicador de desplazamiento / scroll -->
+        <div class="deck-scroll-hint" aria-hidden="true">
+          <span class="hint-desktop">Desliza para girar <span class="hint-icon-vert">↕</span></span>
+          <span class="hint-mobile">Desliza lateral <span class="hint-icon-horiz">↔</span></span>
+        </div>
+      </div>
+
+      <!-- Escenario: Carrusel lateral en móvil y escenario 3D en escritorio -->
+      <div class="deck-stage-wrapper">
+        <button 
+          type="button" 
+          class="deck-nav-arrow deck-nav-prev" 
+          id="deck-nav-prev-btn" 
+          aria-label="Colección anterior"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="deck-3d-stage" id="deck-3d-stage">
+        {categories.map((cat, index) => {
+          const isReversed = index % 2 === 1; // 0: Normal, 1: Invertido, 2: Normal
+          return (
+            <article 
+              class={`flip-category-card ${index === 0 ? 'card-active' : 'card-waiting'} ${isReversed ? 'is-reversed' : ''}`}
+              data-card-index={index}
+              data-category-id={cat.id}
+            >
+              <!-- Cara de la tarjeta: Contenido dividido en 2 columnas -->
+              <div class="card-inner-surface">
+                <!-- Columna de Imagen (arriba en móvil, lateral en escritorio) -->
+                <div class="card-image-col">
+                  <div class="card-photo-box">
+                    <img 
+                      src={cat.image} 
+                      alt={cat.name} 
+                      loading="lazy" 
+                      class="card-img"
+                    />
+                    <div class="photo-vignette" aria-hidden="true"></div>
+                    {cat.badge && (
+                      <span class="card-floating-badge">
+                        <span class="badge-dot"></span>
+                        {cat.badge}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <!-- Columna de Texto -->
+                <div class="card-text-col">
+                  <div class="card-meta-line">
+                    <span class="card-step-badge">Colección 0{index + 1} de 03</span>
+                    <span class="card-tagline">{cat.tagline}</span>
+                  </div>
+
+                  <h3 class="card-title">{cat.name}</h3>
+                  {cat.subtitle && <p class="card-subtitle">«{cat.subtitle}»</p>}
+
+                  <p class="card-description">{cat.description}</p>
+
+                  <!-- Características con check -->
+                  {cat.features && cat.features.length > 0 && (
+                    <ul class="card-features-list">
+                      {cat.features.slice(0, 3).map((feat) => (
+                        <li class="card-feature-item">
+                          <svg class="feature-check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <!-- Fila inferior: Precio y botón -->
+                  <div class="card-footer-action">
+                    {cat.priceNote && (
+                      <div class="card-price-block">
+                        <span class="price-hint">Tarifa especial:</span>
+                        <strong class="price-val">{cat.priceNote}</strong>
+                      </div>
+                    )}
+
+                    <button 
+                      type="button" 
+                      class="btn btn-primary card-cta-btn" 
+                      data-filter-trigger={cat.id}
+                      aria-label={`Ver todos los productos de ${cat.name}`}
+                    >
+                      <span>{cat.ctaText || `Explorar ${cat.name}`}</span>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+      <button 
+          type="button" 
+          class="deck-nav-arrow deck-nav-next" 
+          id="deck-nav-next-btn" 
+          aria-label="Siguiente colección"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Barra de progreso inferior -->
+      <div class="deck-progress-track">
+        <div class="deck-progress-indicator" id="deck-progress-indicator" style="width: 33.33%;"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Pista de categorías: En móvil flujo normal con padding; en desktop pista de 280vh para scroll 3D */
+  .categories-scroll-track {
+    position: relative;
+    background-color: var(--color-cream);
+    padding: 2.25rem 0 2.75rem;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .categories-scroll-track {
+      height: 280vh;
+      margin-top: 2rem;
+      padding: 0;
+      overflow: visible;
+    }
+  }
+
+  /* Viewport de las tarjetas: Estático en móvil, Sticky en desktop */
+  .sticky-deck-viewport {
+    position: relative;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .sticky-deck-viewport {
+      position: sticky;
+      top: 75px;
+      height: calc(100vh - 85px);
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+  }
+
+  .deck-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 768px) {
+    .deck-container {
+      height: 100%;
+      padding-top: 1rem;
+      padding-bottom: 1.25rem;
+    }
+  }
+
+  /* Barra superior */
+  .deck-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .deck-header-text .section-tagline {
+    margin-bottom: 0.25rem;
+  }
+
+  .deck-main-title {
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    color: var(--color-text-main);
+    line-height: 1.15;
+  }
+
+  .deck-selector-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background-color: #FFFFFF;
+    padding: 0.25rem 0.35rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .deck-step-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: transparent;
+    transition: all var(--transition-fast);
+  }
+
+  .deck-step-btn:hover {
+    color: var(--color-text-main);
+  }
+
+  .deck-step-btn.is-active {
+    background-color: var(--color-sage);
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(86, 110, 83, 0.28);
+  }
+
+  .step-num {
+    opacity: 0.8;
+    font-size: 0.75rem;
+  }
+
+  .deck-scroll-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.785rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+  }
+
+  .hint-mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .hint-desktop {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .hint-mobile {
+      display: none;
+    }
+    .hint-desktop {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+  }
+
+  .hint-icon-vert {
+    animation: hintBounce 1.5s infinite ease-in-out;
+    display: inline-block;
+  }
+
+  .hint-icon-horiz {
+    animation: hintSlide 1.5s infinite ease-in-out;
+    display: inline-block;
+  }
+
+  @keyframes hintBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+  }
+
+  @keyframes hintSlide {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+
+  /* ESCENARIO:
+     - En MÓVIL (< 768px): Carrusel lateral con deslizamiento horizontal táctil y botones de flecha
+     - En ESCRITORIO (>= 768px): Escenario 3D donde giran las tarjetas al hacer scroll vertical
+  */
+  .deck-stage-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .deck-nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    color: var(--color-text-main);
+    border: 1.5px solid var(--color-border);
+    box-shadow: 0 4px 14px rgba(36, 32, 28, 0.16);
+    z-index: 20;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .deck-nav-arrow:hover {
+    background-color: var(--color-sage);
+    color: #FFFFFF;
+    border-color: var(--color-sage);
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  .deck-nav-prev {
+    left: -4px;
+  }
+
+  .deck-nav-next {
+    right: -4px;
+  }
+
+  @media (min-width: 768px) {
+    .deck-nav-arrow {
+      display: none; /* En escritorio se usa el giro vertical y las pestañas */
+    }
+  }
+
+  .deck-3d-stage {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    scroll-behavior: smooth;
+    gap: 1.15rem;
+    padding: 0.5rem 0.5rem 1.25rem;
+    scrollbar-width: none; /* Firefox */
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .deck-3d-stage:active {
+    cursor: grabbing;
+  }
+
+  .deck-3d-stage::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  @media (min-width: 768px) {
+    .deck-3d-stage {
+      display: block;
+      position: relative;
+      width: 100%;
+      flex: 1;
+      min-height: 440px;
+      max-height: 540px;
+      perspective: 1800px;
+      -webkit-perspective: 1800px;
+      padding: 0;
+      overflow: visible;
+      scroll-snap-type: none;
+      cursor: default;
+    }
+  }
+
+  /* Tarjeta de categoría:
+     - En móvil: 3 tarjetas independientes que se muestran una al lado de la otra en el carrusel
+     - En desktop: tarjetas superpuestas en 3D que rotan
+  */
+  .flip-category-card {
+    position: relative;
+    flex: 0 0 85%;
+    max-width: 360px;
+    scroll-snap-align: center;
+    scroll-snap-stop: normal;
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 25px rgba(36, 32, 28, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    touch-action: pan-x pan-y;
+  }
+
+  @media (min-width: 768px) {
+    .flip-category-card {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      flex: none;
+      box-shadow: var(--shadow-lg);
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, filter 0.6s ease;
+    }
+
+    .flip-category-card.card-active {
+      transform: rotateY(0deg) translateZ(0) scale(1) !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      z-index: 5;
+      filter: drop-shadow(0 20px 30px rgba(36, 32, 28, 0.12)) !important;
+    }
+
+    .flip-category-card.card-passed {
+      transform: rotateY(-180deg) translateZ(-60px) scale(0.92) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      z-index: 1;
+    }
+
+    .flip-category-card.card-waiting {
+      transform: rotateY(180deg) translateZ(-60px) scale(0.92) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      z-index: 1;
+    }
+  }
+
+  /* Superficie interior de la tarjeta */
+  .card-inner-surface {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.15rem;
+    gap: 1rem;
+    overflow: visible;
+  }
+
+  /* Imagen siempre en primer lugar en el carrusel móvil para impacto visual */
+  .card-image-col {
+    order: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-text-col {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @media (min-width: 900px) {
+    .card-inner-surface {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 3rem;
+      padding: 2.5rem 3rem;
+      height: 100%;
+      align-items: center;
+      overflow-y: hidden;
+    }
+
+    .card-image-col {
+      order: 2;
+      height: 100%;
+    }
+
+    .card-text-col {
+      order: 1;
+    }
+
+    /* Alternancia de diseño en escritorio: Tarjeta 2 invertida */
+    .flip-category-card.is-reversed .card-text-col {
+      order: 2;
+    }
+
+    .flip-category-card.is-reversed .card-image-col {
+      order: 1;
+    }
+  }
+
+  /* Contenedor fotográfico */
+  .card-photo-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    max-height: 210px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--color-sand);
+    box-shadow: var(--shadow-sm);
+    pointer-events: none;
+  }
+
+  @media (min-width: 900px) {
+    .card-photo-box {
+      aspect-ratio: 1 / 1;
+      max-height: 400px;
+    }
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+  }
+
+  .flip-category-card:hover .card-img {
+    transform: scale(1.05);
+  }
+
+  .photo-vignette {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(36, 32, 28, 0.25) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .card-floating-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    color: var(--color-text-main);
+    font-size: 0.725rem;
+    font-weight: 700;
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-sage);
+  }
+
+  /* Meta datos y tipografía */
+  .card-meta-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .card-step-badge {
+    background-color: var(--color-sage-tint);
+    color: var(--color-sage);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.18rem 0.55rem;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+  }
+
+  .card-tagline {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+    line-height: 1.15;
+    margin-bottom: 0.2rem;
+  }
+
+  @media (min-width: 768px) {
+    .card-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .card-subtitle {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--color-terracotta);
+    margin-bottom: 0.45rem;
+  }
+
+  .card-description {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-text-body);
+    margin-bottom: 0.85rem;
+  }
+
+  .card-features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+    padding: 0;
+  }
+
+  .card-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.825rem;
+    color: var(--color-text-body);
+  }
+
+  .feature-check-icon {
+    color: var(--color-sage);
+    flex-shrink: 0;
+  }
+
+  /* Acciones inferiores de la tarjeta */
+  .card-footer-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .card-price-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .price-hint {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .price-val {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--color-text-main);
+  }
+
+  .card-cta-btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.86rem;
+  }
+
+  @media (min-width: 768px) {
+    .card-cta-btn {
+      padding: 0.75rem 1.6rem;
+      font-size: 0.92rem;
+    }
+  }
+
+  /* Barra de progreso inferior */
+  .deck-progress-track {
+    width: 100%;
+    height: 4px;
+    background-color: var(--color-border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin-top: 0.85rem;
+  }
+
+  .deck-progress-indicator {
+    height: 100%;
+    background-color: var(--color-sage);
+    border-radius: var(--radius-pill);
+    transition: width 0.35s ease;
+  }
+</style>

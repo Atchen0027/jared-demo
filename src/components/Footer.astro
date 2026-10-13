@@ -1,0 +1,435 @@
+---
+import { storeConfig } from '../data/storeConfig.js';
+---
+
+<footer class="site-footer" id="contacto">
+  <div class="container footer-main-content">
+    <div class="footer-grid">
+      <!-- 1 ARRIBA: Marca, Lema y Filosofía Canaria (Ancho Completo en móvil) -->
+      <div class="footer-brand-col">
+        <div class="brand-logo footer-logo">
+          <span class="logo-mark">🌿</span>
+          <span class="logo-title">{storeConfig.name}</span>
+        </div>
+        <p class="footer-tagline">
+          «{storeConfig.tagline}»
+        </p>
+        <p class="footer-desc">
+          Cosmética artesanal honesta y botánica formulada con glicerina pura vegetal, manteca de karité e ingredientes naturales inspirados en la calma y pureza de las Islas Canarias.
+        </p>
+        <div class="footer-badges-row">
+          <div class="footer-canarias-badge">
+            <span class="badge-flag">🇮🇨</span>
+            <span>Hecho en Canarias • Tenerife</span>
+          </div>
+          <div class="footer-artisan-badge">
+            <span>✨ 100% Artesanal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 ABAJO (COLUMNA 1): Navegación Rápida -->
+      <div class="footer-links-col footer-nav-col">
+        <h4 class="footer-heading">Navegación</h4>
+        <ul class="footer-links-list">
+          <li><a href="#top">Inicio</a></li>
+          <li><a href="#categorias">Colecciones</a></li>
+          <li><a href="#catalogo" data-filter="all">Catálogo Completo</a></li>
+          <li><a href="#catalogo" data-filter="jabones-artesanales">Jabones de Glicerina</a></li>
+          <li><a href="#catalogo" data-filter="jabones-exfoliantes">Exfoliantes en Tarro</a></li>
+          <li><a href="#catalogo" data-filter="cremas">Cremas Botánicas</a></li>
+        </ul>
+      </div>
+
+      <!-- 2 ABAJO (COLUMNA 2): Cómo Comprar -->
+      <div class="footer-links-col footer-guide-col">
+        <h4 class="footer-heading">Cómo Comprar</h4>
+        <ul class="footer-steps-list">
+          <li class="footer-step-item">
+            <span class="step-num">01</span>
+            <span class="step-txt">Elige tus favoritos</span>
+          </li>
+          <li class="footer-step-item">
+            <span class="step-num">02</span>
+            <span class="step-txt">Revisa tu cesta</span>
+          </li>
+          <li class="footer-step-item">
+            <span class="step-num">03</span>
+            <span class="step-txt">Pide por WhatsApp</span>
+          </li>
+          <li class="footer-step-item">
+            <span class="step-num">04</span>
+            <span class="step-txt">Envío 24-48h Canarias</span>
+          </li>
+          <li class="footer-free-shipping-tag">
+            <span>✨ Envío gratis desde {storeConfig.shipping.freeShippingThreshold.toFixed(2)}€</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- SECCIÓN INFERIOR: Contacto y Demostración -->
+      <div class="footer-contact-col">
+        <h4 class="footer-heading">Contacto Directo</h4>
+        <div class="footer-contact-cards">
+          <a href={`https://wa.me/${storeConfig.whatsAppNumber}`} target="_blank" rel="noopener noreferrer" class="contact-card-btn wa-card-btn" aria-label="Pedir por WhatsApp">
+            <span class="card-btn-icon">💬</span>
+            <div class="card-btn-info">
+              <span class="card-btn-sub">WhatsApp Pedidos</span>
+              <strong class="card-btn-main">{storeConfig.phone}</strong>
+            </div>
+          </a>
+
+          <a href={storeConfig.instagramUrl} target="_blank" rel="noopener noreferrer" class="contact-card-btn ig-card-btn" aria-label="Visitar Instagram">
+            <span class="card-btn-icon">📸</span>
+            <div class="card-btn-info">
+              <span class="card-btn-sub">Instagram Oficial</span>
+              <strong class="card-btn-main">{storeConfig.instagram}</strong>
+            </div>
+          </a>
+        </div>
+
+        <div class="demo-phase-notice">
+          <strong>Fase 1 Demo:</strong> Frontend visual y funcional desacoplado. Datos listos para conectar a un backend PHP y base de datos.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom-bar">
+    <div class="container footer-bottom-inner">
+      <p class="copyright-text">
+        © {new Date().getFullYear()} {storeConfig.name}. Belleza natural que cuida tu piel. Todos los derechos reservados.
+      </p>
+      <div class="footer-bottom-links">
+        <span>Aviso Legal</span>
+        <span>•</span>
+        <span>Privacidad</span>
+        <span>•</span>
+        <span>Cookies</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: #211D19;
+    color: #D4CBC0;
+    margin-top: auto;
+    border-top: 1px solid #332C26;
+  }
+
+  .footer-main-content {
+    padding: 3.5rem 1.25rem 4.5rem;
+  }
+
+  /* Grid en móvil: 1 arriba (Marca span 2), 2 abajo (Navegación + Cómo comprar), y tarjeta contacto abajo */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.25rem;
+  }
+
+  @media (min-width: 992px) {
+    .footer-grid {
+      grid-template-columns: 1.55fr 0.95fr 1.15fr 1.35fr;
+      gap: 3rem;
+    }
+  }
+
+  /* 1 ARRIBA: Columna de Marca */
+  .footer-brand-col {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 1.75rem;
+  }
+
+  @media (min-width: 992px) {
+    .footer-brand-col {
+      grid-column: auto;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .footer-logo .logo-mark {
+    font-size: 1.4rem;
+  }
+
+  .footer-logo .logo-title {
+    color: #FFFFFF;
+    font-size: 1.85rem;
+    font-family: var(--font-serif);
+    letter-spacing: 0.06em;
+    font-weight: 700;
+  }
+
+  .footer-tagline {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    color: #F0EAE1;
+    margin: 0.35rem 0 0.75rem;
+  }
+
+  .footer-desc {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #A3998E;
+    margin-bottom: 1.15rem;
+    max-width: 520px;
+  }
+
+  .footer-badges-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .footer-canarias-badge,
+  .footer-artisan-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.785rem;
+    color: #E2DBD2;
+  }
+
+  .footer-artisan-badge {
+    background-color: rgba(158, 192, 154, 0.12);
+    border-color: rgba(158, 192, 154, 0.25);
+    color: #C0D6BC;
+  }
+
+  /* 2 ABAJO: Navegación y Cómo Comprar */
+  .footer-nav-col {
+    grid-column: 1 / 2;
+  }
+
+  .footer-guide-col {
+    grid-column: 2 / 3;
+  }
+
+  @media (min-width: 992px) {
+    .footer-nav-col,
+    .footer-guide-col {
+      grid-column: auto;
+    }
+  }
+
+  .footer-heading {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #FFFFFF;
+    margin-bottom: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .footer-heading::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-sage-light, #9EC09A);
+  }
+
+  /* Enlaces de Navegación */
+  .footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0;
+    font-size: 0.85rem;
+  }
+
+  .footer-links-list a {
+    color: #B5ABA0;
+    transition: all var(--transition-fast);
+    display: inline-block;
+  }
+
+  .footer-links-list a:hover {
+    color: #FFFFFF;
+    transform: translateX(3px);
+  }
+
+  /* Pasos de Cómo Comprar */
+  .footer-steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0;
+  }
+
+  .footer-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.825rem;
+    color: #B5ABA0;
+  }
+
+  .step-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #9EC09A;
+    background-color: rgba(158, 192, 154, 0.14);
+    padding: 0.08rem 0.35rem;
+    border-radius: var(--radius-pill);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-txt {
+    line-height: 1.35;
+  }
+
+  .footer-free-shipping-tag {
+    list-style: none;
+    margin-top: 0.35rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #E6D2B5;
+    background-color: rgba(255, 255, 255, 0.06);
+    padding: 0.3rem 0.55rem;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+  }
+
+  /* SECCIÓN CONTACTO */
+  .footer-contact-col {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1.75rem;
+  }
+
+  @media (min-width: 992px) {
+    .footer-contact-col {
+      grid-column: auto;
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+
+  .footer-contact-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.15rem;
+  }
+
+  @media (min-width: 540px) {
+    .footer-contact-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .footer-contact-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contact-card-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-fast);
+  }
+
+  .contact-card-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .wa-card-btn {
+    border-left: 3px solid #25D366;
+  }
+
+  .ig-card-btn {
+    border-left: 3px solid #E1306C;
+  }
+
+  .card-btn-icon {
+    font-size: 1.25rem;
+  }
+
+  .card-btn-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-btn-sub {
+    font-size: 0.72rem;
+    color: #A3998E;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .card-btn-main {
+    font-size: 0.88rem;
+    color: #FFFFFF;
+    font-weight: 600;
+  }
+
+  .demo-phase-notice {
+    padding: 0.75rem 0.95rem;
+    border-radius: var(--radius-sm);
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px dashed rgba(255, 255, 255, 0.16);
+    font-size: 0.785rem;
+    color: #B5ABA0;
+    line-height: 1.45;
+  }
+
+  .demo-phase-notice strong {
+    color: #D4CBC0;
+  }
+
+  /* BARRA INFERIOR */
+  .footer-bottom-bar {
+    background-color: #181512;
+    padding: 1.25rem 0;
+    border-top: 1px solid #28231E;
+    font-size: 0.8rem;
+    color: #8C8276;
+  }
+
+  .footer-bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+</style>

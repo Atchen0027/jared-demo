@@ -1,0 +1,265 @@
+---
+import { storeConfig } from '../data/storeConfig.js';
+---
+
+<div class="whatsapp-modal-backdrop" id="whatsapp-modal-backdrop" aria-hidden="true"></div>
+
+<div class="whatsapp-modal" id="whatsapp-modal" role="dialog" aria-labelledby="wa-modal-title" aria-modal="true">
+  <div class="wa-modal-inner">
+    <!-- Cabecera estilo WhatsApp -->
+    <div class="wa-header">
+      <div class="wa-brand-profile">
+        <div class="wa-avatar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 2C6.5 2 2.016 6.484 2.016 12.016c0 1.766.46 3.484 1.332 5.007L2 22l5.125-1.325c1.47.804 3.125 1.238 4.906 1.238 5.531 0 10.016-4.484 10.016-10.016C22.047 6.484 17.562 2 12.031 2z"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="wa-title" id="wa-modal-title">Tramitación por WhatsApp</h3>
+          <span class="wa-subtitle">Vista previa del mensaje generado • {storeConfig.name}</span>
+        </div>
+      </div>
+      <button type="button" class="wa-close-btn" id="wa-modal-close" aria-label="Cerrar vista previa">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Banner explicativo de la fase de demo -->
+    <div class="wa-demo-banner">
+      <div class="wa-demo-icon">ℹ️</div>
+      <div class="wa-demo-text">
+        <strong>Modo Demostración para Cliente:</strong>
+        <p>
+          Este pedido se canaliza mediante un mensaje estructurado directo al WhatsApp oficial de Nubeterapia (actualmente configurado con el número de prueba provisional <code>{storeConfig.phone}</code> en <code>storeConfig.js</code>).
+        </p>
+      </div>
+    </div>
+
+    <!-- Contenedor del chat / burbuja de mensaje -->
+    <div class="wa-chat-canvas">
+      <div class="wa-message-bubble">
+        <pre class="wa-message-text" id="wa-preview-content">
+Cargando mensaje del pedido...
+        </pre>
+        <div class="wa-msg-meta">
+          <span class="wa-msg-time" id="wa-current-time">15:30</span>
+          <span class="wa-msg-ticks">✓✓</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones del modal -->
+    <div class="wa-footer-actions">
+      <button type="button" class="btn btn-secondary wa-copy-btn" id="wa-copy-text-btn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span id="copy-btn-label">Copiar texto</span>
+      </button>
+
+      <a 
+        href="#" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="btn btn-whatsapp wa-launch-btn" 
+        id="wa-open-chat-link"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.031 2C6.5 2 2.016 6.484 2.016 12.016c0 1.766.46 3.484 1.332 5.007L2 22l5.125-1.325c1.47.804 3.125 1.238 4.906 1.238 5.531 0 10.016-4.484 10.016-10.016C22.047 6.484 17.562 2 12.031 2zm5.836 14.18c-.242.684-1.203 1.258-1.742 1.344-.48.078-1.106.14-3.219-.738-2.703-1.121-4.449-3.867-4.586-4.047-.137-.184-1.094-1.457-1.094-2.781s.691-1.977.938-2.246c.246-.27.535-.336.715-.336.184 0 .367.004.527.012.172.008.406-.066.637.488.242.574.82 2.008.895 2.156.074.152.125.332.023.531-.098.203-.152.328-.3.504-.152.176-.32.391-.457.527-.152.148-.313.313-.133.621.18.309.797 1.316 1.711 2.133 1.176 1.051 2.168 1.375 2.477 1.527.309.152.488.133.668-.078.18-.211.777-.902.984-1.215.207-.309.414-.262.695-.156.281.102 1.785.84 2.094.992.309.156.516.234.59.363.074.133.074.773-.168 1.457z"/>
+        </svg>
+        <span>Abrir en WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .whatsapp-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(24, 21, 18, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal);
+    z-index: 400;
+  }
+
+  .whatsapp-modal-backdrop.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .whatsapp-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%) scale(0.96);
+    width: 90%;
+    max-width: 580px;
+    max-height: 85vh;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    z-index: 410;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .whatsapp-modal.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .wa-modal-inner {
+    background-color: #FFFFFF;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+    border: 1px solid var(--color-border);
+  }
+
+  /* Encabezado */
+  .wa-header {
+    background-color: #075E54;
+    color: #FFFFFF;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .wa-brand-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .wa-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #25D366;
+  }
+
+  .wa-title {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 1.2;
+  }
+
+  .wa-subtitle {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .wa-close-btn {
+    color: #FFFFFF;
+    opacity: 0.8;
+    padding: 0.25rem;
+    transition: opacity var(--transition-fast);
+  }
+
+  .wa-close-btn:hover {
+    opacity: 1;
+  }
+
+  /* Banner demo */
+  .wa-demo-banner {
+    background-color: #FFF9E6;
+    border-bottom: 1px solid #F1E5C0;
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    gap: 0.65rem;
+    font-size: 0.825rem;
+    color: #6D5620;
+    line-height: 1.45;
+  }
+
+  .wa-demo-banner code {
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+
+  /* Chat canvas */
+  .wa-chat-canvas {
+    background-color: #EFE7DD;
+    background-image: radial-gradient(#E0D4C5 1px, transparent 1px);
+    background-size: 16px 16px;
+    padding: 1.5rem 1.25rem;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .wa-message-bubble {
+    background-color: #E7FFDB;
+    padding: 1rem 1.15rem 0.75rem;
+    border-radius: 12px 0 12px 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    max-width: 90%;
+    position: relative;
+  }
+
+  .wa-message-text {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #111B21;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: 0.35rem;
+  }
+
+  .wa-msg-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    color: #667781;
+  }
+
+  .wa-msg-ticks {
+    color: #53BDEB;
+  }
+
+  /* Footer */
+  .wa-footer-actions {
+    padding: 1.15rem 1.25rem;
+    background-color: #FFFFFF;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .wa-copy-btn {
+    flex: 1;
+  }
+
+  .wa-launch-btn {
+    flex: 1.4;
+  }
+</style>

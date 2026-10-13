@@ -1,0 +1,720 @@
+---
+import { storeConfig } from '../data/storeConfig.js';
+---
+
+<header class="site-header" id="site-header">
+  <!-- Barra de aviso superior -->
+  <div class="top-announcement">
+    <div class="container announcement-content">
+      <span class="announcement-badge">Canarias</span>
+      <span>🌿 <strong>{storeConfig.tagline}</strong> • Envío gratis a partir de {storeConfig.shipping.freeShippingThreshold.toFixed(2)}{storeConfig.currency}</span>
+      <a href="https://instagram.com/nubeterapia" target="_blank" rel="noopener noreferrer" class="announcement-social" aria-label="Instagram Nubeterapia">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>{storeConfig.instagram}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Navegación principal -->
+  <div class="header-main">
+    <div class="container header-inner">
+      <!-- Botón móvil menú hamburguesa -->
+      <button type="button" class="mobile-toggle" id="mobile-menu-open" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobile-nav">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Logotipo con isotipo de nube artesanal -->
+      <a href="#top" class="brand-logo" aria-label={`${storeConfig.name} - Inicio`}>
+        <div class="logo-mark" aria-hidden="true">
+          <!-- Isotipo de nube estilizada como en la cartelería original -->
+          <svg width="34" height="24" viewBox="0 0 34 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 19C4.23858 19 2 16.7614 2 14C2 11.4587 3.89674 9.36014 6.36881 9.04944C7.03741 5.04899 10.5188 2 14.7 2C18.2526 2 21.3129 4.20579 22.454 7.37135C23.1118 7.13217 23.821 7 24.56 7C27.5644 7 30 9.4356 30 12.44C30 12.6309 29.9897 12.8193 29.9698 13.0049C31.1895 13.8871 32 15.3498 32 17C32 19.7614 29.7614 22 27 22H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M26 3L27 5L29 6L27 7L26 9L25 7L23 6L25 5L26 3Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">{storeConfig.name}</span>
+          <span class="logo-subtitle">COSMÉTICA ARTESANAL</span>
+        </div>
+      </a>
+
+      <!-- Menú de escritorio -->
+      <nav class="desktop-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a href="#top" class="nav-link">Inicio</a></li>
+          <li><a href="#quienes-somos" class="nav-link">Quiénes Somos</a></li>
+          <li class="has-dropdown">
+            <a href="#categorias" class="nav-link">Colecciones</a>
+          </li>
+          <li><a href="#catalogo" class="nav-link" data-filter="all">Todos</a></li>
+          <li><a href="#catalogo" class="nav-link" data-filter="jabones-artesanales">Jabones</a></li>
+          <li><a href="#catalogo" class="nav-link" data-filter="jabones-exfoliantes">Exfoliantes</a></li>
+          <li><a href="#catalogo" class="nav-link" data-filter="cremas">Cremas</a></li>
+        </ul>
+      </nav>
+
+      <!-- Acciones de cabecera -->
+      <div class="header-actions">
+        <!-- Acceso directo al Panel de Control Demo -->
+        <button type="button" class="admin-header-pill" id="open-admin-header-btn" title="Simulación del panel de control para el cliente">
+          <span class="pill-gear">⚙️</span>
+          <span class="pill-text">Panel Demo</span>
+        </button>
+
+        <!-- Buscador rápido -->
+        <a href="#catalogo" class="action-btn search-trigger" aria-label="Buscar productos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
+        <!-- Botón del Carrito -->
+        <button type="button" class="cart-trigger-btn" id="open-cart-btn" aria-label="Abrir carrito de compra" aria-haspopup="dialog">
+          <div class="cart-icon-wrapper">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-7z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="cart-count-badge" id="header-cart-count">0</span>
+          </div>
+          <span class="cart-btn-label">Carrito</span>
+          <span class="cart-total-badge" id="header-cart-total">0,00€</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Menú móvil desplegable (fuera de <header> para que position: fixed sea relativo al viewport real y no quede atrapado por backdrop-filter) -->
+<div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
+<aside class="mobile-nav-panel" id="mobile-nav" aria-label="Menú móvil">
+  <div class="mobile-nav-header">
+    <div class="brand-logo mobile-brand">
+      <span class="logo-mark">🌿</span>
+      <div class="logo-text">
+        <span class="logo-title">{storeConfig.name}</span>
+        <span class="logo-subtitle">Cosmética Artesanal Canarias</span>
+      </div>
+    </div>
+    <button type="button" class="mobile-close-btn" id="mobile-menu-close" aria-label="Cerrar menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="mobile-nav-body">
+    <!-- Grupo 1: Exploración principal -->
+    <div class="mobile-nav-section">
+      <span class="mobile-nav-heading">Navegación</span>
+      <ul class="mobile-nav-list">
+        <li><a href="#top" class="mobile-link"><span class="link-icon">🌿</span> <span>Inicio</span></a></li>
+        <li><a href="#quienes-somos" class="mobile-link"><span class="link-icon">🤍</span> <span>Quiénes Somos</span></a></li>
+        <li><a href="#categorias" class="mobile-link"><span class="link-icon">📦</span> <span>Colecciones Botánicas (Giro 3D)</span></a></li>
+        <li><a href="#catalogo" class="mobile-link" data-filter="all"><span class="link-icon">✨</span> <span>Todos los Productos</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Grupo 2: Categorías destacadas -->
+    <div class="mobile-nav-section">
+      <span class="mobile-nav-heading">Colecciones</span>
+      <ul class="mobile-nav-list">
+        <li><a href="#catalogo" class="mobile-link" data-filter="jabones-artesanales"><span class="link-icon">🫧</span> <span>Jabones Artesanales (3x10€)</span></a></li>
+        <li><a href="#catalogo" class="mobile-link" data-filter="jabones-exfoliantes"><span class="link-icon">🍯</span> <span>Exfoliantes en Tarro (6€)</span></a></li>
+        <li><a href="#catalogo" class="mobile-link" data-filter="cremas"><span class="link-icon">🧴</span> <span>Cremas Botánicas</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Grupo 3: Atención y Demo -->
+    <div class="mobile-nav-section">
+      <span class="mobile-nav-heading">Atención & Demostración</span>
+      <ul class="mobile-nav-list">
+        <li><a href="#contacto" class="mobile-link wa-mobile-link"><span class="link-icon">💬</span> <span>Contacto por WhatsApp</span></a></li>
+        <li class="mobile-admin-item">
+          <button type="button" class="mobile-link mobile-admin-btn" id="open-admin-mobile-btn">
+            <span class="link-icon">⚙️</span>
+            <span>Panel de Control (Demo)</span>
+            <span class="admin-chip">PHP</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="mobile-nav-footer">
+      <div class="mobile-footer-badge">
+        <span>🇮🇨 Hecho en Canarias • Tenerife</span>
+      </div>
+      <p class="mobile-footer-sub">Glicerina vegetal & manteca de karité</p>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(250, 247, 242, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    transition: transform var(--transition-normal);
+  }
+
+  .top-announcement {
+    background-color: var(--color-sage);
+    color: #FFFFFF;
+    font-size: 0.785rem;
+    padding: 0.45rem 0;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .top-announcement {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+
+  .announcement-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .announcement-content {
+      gap: 0.4rem;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .announcement-badge {
+    background-color: rgba(255, 255, 255, 0.22);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 640px) {
+    .announcement-badge {
+      display: none;
+    }
+  }
+
+  .announcement-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    opacity: 0.9;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .announcement-social {
+      display: none;
+    }
+  }
+
+  .announcement-social:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .header-main {
+    padding: 0.85rem 0;
+  }
+
+  @media (max-width: 640px) {
+    .header-main {
+      padding: 0.55rem 0;
+    }
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  /* Logotipo */
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-main);
+  }
+
+  .logo-mark {
+    color: var(--color-sage);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-fast);
+  }
+
+  .brand-logo:hover .logo-mark {
+    transform: scale(1.08) rotate(-3deg);
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo-title {
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: var(--color-text-main);
+    text-transform: uppercase;
+  }
+
+  .logo-subtitle {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--color-sage);
+    margin-top: 0.2rem;
+  }
+
+  /* Navegación escritorio */
+  .desktop-nav {
+    display: none;
+  }
+
+  @media (min-width: 992px) {
+    .desktop-nav {
+      display: block;
+    }
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: 0.925rem;
+    font-weight: 500;
+    color: var(--color-text-body);
+    position: relative;
+    padding: 0.25rem 0;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--color-sage);
+    transition: width var(--transition-fast);
+    border-radius: 2px;
+  }
+
+  .nav-link:hover {
+    color: var(--color-sage);
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* Acciones */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .action-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--color-text-main);
+    background-color: var(--color-cream-subtle);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+  }
+
+  .action-btn:hover {
+    background-color: var(--color-sand);
+    transform: translateY(-1px);
+  }
+
+  /* Botón Panel Demo en cabecera */
+  .admin-header-pill {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    background-color: #24201C;
+    color: #FFFFFF;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+  }
+
+  @media (min-width: 768px) {
+    .admin-header-pill {
+      display: inline-flex;
+    }
+  }
+
+  .admin-header-pill:hover {
+    background-color: var(--color-sage);
+    transform: translateY(-1px);
+  }
+
+  .mobile-admin-item {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--color-border);
+  }
+
+  .mobile-admin-btn {
+    width: 100%;
+    text-align: left;
+    background-color: #24201C;
+    color: #FFFFFF !important;
+    padding: 0.65rem 1rem !important;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem !important;
+  }
+
+  /* Botón carrito */
+  .cart-trigger-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.9rem;
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-xs);
+    transition: all var(--transition-fast);
+  }
+
+  .cart-trigger-btn:hover {
+    border-color: var(--color-sage);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cart-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--color-sage);
+  }
+
+  .cart-count-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: var(--color-terracotta);
+    color: #FFFFFF;
+    font-size: 0.7rem;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    transition: transform var(--transition-fast);
+  }
+
+  .cart-btn-label {
+    display: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .cart-total-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-sage);
+    padding-left: 0.25rem;
+    border-left: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 640px) {
+    .cart-btn-label {
+      display: inline-block;
+    }
+  }
+
+  /* Botón móvil */
+  .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    color: var(--color-text-main);
+  }
+
+  @media (min-width: 992px) {
+    .mobile-toggle {
+      display: none;
+    }
+  }
+
+  /* Drawer móvil */
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: rgba(24, 21, 18, 0.68);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal);
+    z-index: 998;
+  }
+
+  .mobile-nav-backdrop.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-nav-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 86%;
+    max-width: 330px;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #FAF7F2 !important; /* 100% sólido y opaco */
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.35);
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-nav-panel.is-active {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.15rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+    background-color: #FFFFFF;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mobile-brand .logo-mark {
+    font-size: 1.35rem;
+  }
+
+  .mobile-brand .logo-title {
+    font-size: 1.35rem;
+    font-family: var(--font-serif);
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .mobile-brand .logo-subtitle {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-sage);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .mobile-close-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-main);
+    transition: all var(--transition-fast);
+  }
+
+  .mobile-close-btn:hover {
+    background-color: var(--color-sand);
+    transform: rotate(90deg);
+  }
+
+  .mobile-nav-body {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    background-color: #FAF7F2;
+  }
+
+  .mobile-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .mobile-nav-heading {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    padding: 0 0.4rem;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0;
+  }
+
+  .mobile-link {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--color-text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-link:hover {
+    color: var(--color-sage);
+    background-color: var(--color-sand);
+    transform: translateX(3px);
+  }
+
+  .mobile-link .link-icon {
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .wa-mobile-link {
+    background-color: #E8F5E9;
+    border-color: #C8E6C9;
+    color: #1B5E20;
+    font-weight: 600;
+  }
+
+  .wa-mobile-link:hover {
+    background-color: #C8E6C9;
+    color: #1B5E20;
+  }
+
+  .mobile-admin-item {
+    margin-top: 0.25rem;
+  }
+
+  .mobile-admin-btn {
+    width: 100%;
+    background-color: #24201C !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    font-weight: 600 !important;
+    justify-content: flex-start;
+  }
+
+  .mobile-admin-btn:hover {
+    background-color: var(--color-sage) !important;
+  }
+
+  .admin-chip {
+    margin-left: auto;
+    background-color: var(--color-gold);
+    color: #1A1612;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+  }
+
+  .mobile-nav-footer {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .mobile-footer-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+  }
+
+  .mobile-footer-sub {
+    font-size: 0.74rem;
+    color: var(--color-text-muted);
+    padding-left: 0.25rem;
+  }
+</style>

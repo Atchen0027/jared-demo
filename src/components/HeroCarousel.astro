@@ -1,0 +1,449 @@
+---
+import { slides } from '../data/slides.js';
+---
+
+<section class="hero-section" id="hero-carousel" aria-label="Novedades y promociones destacadas">
+  <div class="carousel-container">
+    <div class="carousel-slides-wrapper" id="carousel-wrapper">
+      {slides.map((slide, index) => (
+        <article 
+          class={`carousel-slide ${index === 0 ? 'is-active' : ''}`}
+          data-slide-index={index}
+          data-filter-target={slide.filterCategory}
+          aria-hidden={index !== 0 ? 'true' : 'false'}
+        >
+          <!-- Imagen de fondo con overlay degradado para contraste óptimo -->
+          <div class="slide-media">
+            <img 
+              src={slide.image} 
+              alt={slide.alt}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchpriority={index === 0 ? 'high' : 'auto'}
+              class="slide-image"
+            />
+            <div class="slide-overlay" aria-hidden="true"></div>
+          </div>
+
+          <!-- Contenido textual asociado -->
+          <div class="container slide-content-container">
+            <div class="slide-card">
+              <span class="slide-badge">
+                <span class="badge-dot"></span>
+                {slide.badge}
+              </span>
+              <p class="slide-tagline">{slide.tagline}</p>
+              <h1 class="slide-title">{slide.title}</h1>
+              <p class="slide-description">{slide.description}</p>
+              
+              <div class="slide-actions">
+                <a 
+                  href={slide.ctaLink} 
+                  class="btn btn-primary slide-cta"
+                  data-filter={slide.filterCategory}
+                >
+                  <span>{slide.ctaText}</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+
+                <a href="#categorias" class="btn btn-secondary slide-secondary-cta">
+                  Ver Colecciones
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Controles de navegación y accesibilidad -->
+    <div class="container carousel-controls-container">
+      <div class="carousel-nav-bar">
+        <!-- Flecha Anterior -->
+        <button type="button" class="carousel-arrow carousel-prev" id="carousel-prev-btn" aria-label="Diapositiva anterior">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Indicadores (Dots) -->
+        <div class="carousel-indicators" role="tablist" aria-label="Seleccionar diapositiva">
+          {slides.map((slide, index) => (
+            <button 
+              type="button" 
+              role="tab"
+              class={`indicator-dot ${index === 0 ? 'is-active' : ''}`}
+              data-slide-to={index}
+              aria-label={`Ir a diapositiva ${index + 1}: ${slide.title}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+            >
+              <span class="dot-fill"></span>
+            </button>
+          ))}
+        </div>
+
+        <!-- Flecha Siguiente -->
+        <button type="button" class="carousel-arrow carousel-next" id="carousel-next-btn" aria-label="Diapositiva siguiente">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Botón de Pausa / Reproducción accesible -->
+        <button type="button" class="carousel-pause-btn" id="carousel-pause-toggle" aria-label="Pausar reproducción automática" aria-pressed="false">
+          <span class="pause-icon" id="pause-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </span>
+          <span class="play-icon" id="play-icon" style="display: none;" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </span>
+          <span class="pause-label">Auto</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #24201C;
+  }
+
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    min-height: 560px;
+    height: 72vh;
+    max-height: 740px;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-container {
+      height: 600px;
+      min-height: 560px;
+      max-height: 640px;
+    }
+  }
+
+  .carousel-slides-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .carousel-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: scale(1.02);
+    display: flex;
+    align-items: center;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-slide {
+      align-items: flex-start;
+      padding-top: 1.75rem;
+    }
+  }
+
+  .carousel-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    z-index: 2;
+  }
+
+  .slide-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.05);
+    transition: transform 7s ease-out;
+  }
+
+  .carousel-slide.is-active .slide-image {
+    transform: scale(1);
+  }
+
+  .slide-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(24, 21, 18, 0.88) 0%,
+      rgba(24, 21, 18, 0.72) 45%,
+      rgba(24, 21, 18, 0.25) 100%
+    );
+  }
+
+  @media (max-width: 768px) {
+    .slide-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(24, 21, 18, 0.45) 0%,
+        rgba(24, 21, 18, 0.62) 50%,
+        rgba(24, 21, 18, 0.82) 100%
+      );
+    }
+  }
+
+  .slide-content-container {
+    position: relative;
+    z-index: 5;
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+  }
+
+  @media (max-width: 768px) {
+    .slide-content-container {
+      padding-top: 1rem;
+      padding-bottom: 5.5rem;
+    }
+  }
+
+  .slide-card {
+    max-width: 580px;
+    color: #FFFFFF;
+  }
+
+  .slide-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #F8F4ED;
+    margin-bottom: 1rem;
+    transform: translateY(15px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  }
+
+  @media (max-width: 768px) {
+    .slide-badge {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #9EC09A;
+  }
+
+  .slide-tagline {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #D9D1C7;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+    transform: translateY(15px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  }
+
+  @media (max-width: 768px) {
+    .slide-tagline {
+      font-size: 0.785rem;
+      margin-bottom: 0.35rem;
+    }
+  }
+
+  .slide-title {
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    line-height: 1.1;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 1.1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    transform: translateY(15px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .slide-title {
+      font-size: clamp(1.65rem, 5.8vw, 2.15rem);
+      line-height: 1.18;
+      margin-bottom: 0.65rem;
+    }
+  }
+
+  .slide-description {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #E3DDD5;
+    margin-bottom: 2rem;
+    max-width: 520px;
+    transform: translateY(15px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+  }
+
+  @media (max-width: 768px) {
+    .slide-description {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  .slide-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    transform: translateY(15px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+  }
+
+  /* Animación de entrada de los elementos al activarse la diapositiva */
+  .carousel-slide.is-active .slide-badge,
+  .carousel-slide.is-active .slide-tagline,
+  .carousel-slide.is-active .slide-title,
+  .carousel-slide.is-active .slide-description,
+  .carousel-slide.is-active .slide-actions {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .slide-cta {
+    background-color: var(--color-sage-light);
+    color: #172416;
+    font-weight: 700;
+    padding: 0.9rem 1.8rem;
+  }
+
+  .slide-cta:hover {
+    background-color: #FFFFFF;
+    color: #172416;
+  }
+
+  .slide-secondary-cta {
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #FFFFFF;
+  }
+
+  .slide-secondary-cta:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Controles inferiores del carrusel */
+  .carousel-controls-container {
+    position: absolute;
+    bottom: 1.75rem;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
+
+  .carousel-nav-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: rgba(24, 21, 18, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .carousel-arrow {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.12);
+    transition: all var(--transition-fast);
+  }
+
+  .carousel-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.28);
+    transform: scale(1.08);
+  }
+
+  .carousel-indicators {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.4rem;
+  }
+
+  .indicator-dot {
+    width: 26px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+  }
+
+  .indicator-dot.is-active {
+    width: 44px;
+    background-color: var(--color-sage-light);
+  }
+
+  .carousel-pause-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #D9D1C7;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.55rem;
+    border-radius: var(--radius-pill);
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .carousel-pause-btn:hover {
+    color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.18);
+  }
+</style>

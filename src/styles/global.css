@@ -1,0 +1,299 @@
+/* ==========================================================================
+   NUBETERAPIA - SISTEMA DE DISEÑO GLOBAL (CSS3 PURO)
+   Inspirado en la naturaleza de Canarias, tonos crema, salvia, arena y miel.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Paleta cromática artesanal */
+  --color-cream: #FAF7F2;
+  --color-cream-subtle: #F4EFEA;
+  --color-sand: #EAE1D5;
+  --color-sand-dark: #D4C6B4;
+  --color-card-bg: #FFFFFF;
+  
+  --color-sage: #566E53;
+  --color-sage-hover: #435840;
+  --color-sage-light: #8FA48C;
+  --color-sage-tint: #EEF3ED;
+  
+  --color-terracotta: #A85E48;
+  --color-terracotta-tint: #FBEFEA;
+  --color-gold: #C28B1E;
+  --color-gold-tint: #FBF4E4;
+  --color-lavender-tint: #F2EEF8;
+  
+  --color-text-main: #24201C;
+  --color-text-body: #4E4741;
+  --color-text-muted: #7E746A;
+  --color-border: #E8E0D5;
+  --color-border-light: #F0EAE1;
+
+  /* Sombras sutiles y orgánicas */
+  --shadow-xs: 0 1px 2px rgba(36, 32, 28, 0.04);
+  --shadow-sm: 0 2px 6px rgba(36, 32, 28, 0.06);
+  --shadow-md: 0 8px 24px rgba(36, 32, 28, 0.08);
+  --shadow-lg: 0 16px 36px rgba(36, 32, 28, 0.12);
+  --shadow-drawer: -6px 0 30px rgba(36, 32, 28, 0.18);
+
+  /* Tipografía */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Transiciones */
+  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Geometría */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 9999px;
+  
+  --max-width: 1240px;
+}
+
+/* Reset y caja */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--color-cream);
+  color: var(--color-text-main);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  background-color: var(--color-cream);
+  color: var(--color-text-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Enlaces y botones */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Contenedores globales */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Títulos con tipografía editorial */
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+  color: var(--color-text-main);
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+}
+
+.section-tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-sage);
+  background-color: var(--color-sage-tint);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.85rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+  color: var(--color-text-main);
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Botones con estilo artesanal */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: var(--color-sage);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(86, 110, 83, 0.25);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-sage-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(86, 110, 83, 0.32);
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-cream-subtle);
+  border-color: var(--color-sand-dark);
+  transform: translateY(-1px);
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.28);
+}
+
+.btn-whatsapp:hover {
+  background-color: #20BA5A;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.38);
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-sage {
+  background-color: var(--color-sage-tint);
+  color: var(--color-sage);
+}
+
+.badge-gold {
+  background-color: var(--color-gold-tint);
+  color: var(--color-gold);
+}
+
+.badge-terracotta {
+  background-color: var(--color-terracotta-tint);
+  color: var(--color-terracotta);
+}
+
+/* Notificación flotante Toast */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.toast {
+  background-color: var(--color-text-main);
+  color: #FFFFFF;
+  padding: 0.9rem 1.4rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: toastSlideIn 0.35s ease forwards;
+  pointer-events: auto;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Accesibilidad y movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,325 @@
+---
+import { storeConfig } from '../data/storeConfig.js';
+---
+
+<section class="about-us-section" id="quienes-somos" aria-label="Quiénes somos y nuestra historia">
+  <div class="container">
+    <div class="about-grid">
+      <!-- Columna Visual: Composición de imágenes botánicas y sello artesanal -->
+      <div class="about-visual-col">
+        <div class="about-images-composition">
+          <div class="about-img-main-card">
+            <img 
+              src="/images/posters/ducha-3-jabones-10e.jpg" 
+              alt="Elaboración artesanal de jabones Nubeterapia en Tenerife" 
+              loading="lazy"
+              class="about-img-main"
+            />
+            <div class="about-img-overlay" aria-hidden="true"></div>
+          </div>
+
+          <!-- Tarjeta flotante con sello de Canarias -->
+          <div class="about-stamp-card">
+            <div class="stamp-icon">🌴</div>
+            <div class="stamp-text">
+              <strong>Tenerife, Canarias</strong>
+              <span>Artesanía local sostenible</span>
+            </div>
+          </div>
+
+          <!-- Tarjeta flotante con valores -->
+          <div class="about-stat-card">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Glicerina vegetal & extractos vivos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna de Contenido Editorial -->
+      <div class="about-content-col">
+        <span class="section-tagline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9s-9 4.03-9 9a9 9 0 0 0 9 9Z"></path>
+            <path d="M12 7v5l3 3"></path>
+          </svg>
+          Nuestra Esencia
+        </span>
+
+        <h2 class="about-heading">Quiénes Somos</h2>
+        <p class="about-lead">
+          «Nacimos con un propósito simple y honesto: devolver a tu piel la calma y pureza que la rutina diaria le quita.»
+        </p>
+
+        <p class="about-paragraph">
+          En <strong>{storeConfig.name}</strong> creemos que el momento del baño no debe ser un trámite, sino un ritual de desconexión. En nuestro pequeño obrador artesanal en <strong>Tenerife</strong>, combinamos glicerina vegetal pura de la máxima calidad con aceites esenciales botánicos, mantecas de karité sin refinar y plantas aromáticas cosechadas bajo el sol de Canarias.
+        </p>
+
+        <p class="about-paragraph">
+          Cada jabón está cortado, formulado y sellado a mano con dedicación absoluta. Sin prisas industriales, sin sulfatos agresivos ni derivados petroquímicos. Solo cosmética que se siente, se nota y enamora desde el primer contacto con el agua.
+        </p>
+
+        <!-- Puntos fuertes de la marca -->
+        <div class="about-pillars-grid">
+          <div class="pillar-box">
+            <span class="pillar-icon">🌿</span>
+            <div class="pillar-info">
+              <h4>Fórmulas Limpias</h4>
+              <p>Sin parabenos, sulfatos ni microplásticos nocivos.</p>
+            </div>
+          </div>
+
+          <div class="pillar-box">
+            <span class="pillar-icon">🤲</span>
+            <div class="pillar-info">
+              <h4>Lotes Pequeños</h4>
+              <p>Hechos a mano con control minucioso de cada barra.</p>
+            </div>
+          </div>
+
+          <div class="pillar-box">
+            <span class="pillar-icon">🫧</span>
+            <div class="pillar-info">
+              <h4>Glicerina Pura</h4>
+              <p>Respeta la hidratación natural de las pieles más sensibles.</p>
+            </div>
+          </div>
+
+          <div class="pillar-box">
+            <span class="pillar-icon">📦</span>
+            <div class="pillar-info">
+              <h4>Trato Cercano</h4>
+              <p>Atención directa y pedidos personalizados por WhatsApp.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-cta-row">
+          <a href="#categorias" class="btn btn-primary">
+            <span>Conoce Nuestras Colecciones</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+
+          <a href="#catalogo" class="btn btn-secondary">
+            Ir al Catálogo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-us-section {
+    padding: 5.5rem 0 4.5rem;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .about-grid {
+      grid-template-columns: 1fr 1.25fr;
+      gap: 4.5rem;
+    }
+  }
+
+  /* Columna visual */
+  .about-visual-col {
+    position: relative;
+  }
+
+  .about-images-composition {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .about-img-main-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    aspect-ratio: 4 / 5;
+    background-color: var(--color-sand);
+  }
+
+  .about-img-main {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .about-images-composition:hover .about-img-main {
+    transform: scale(1.04);
+  }
+
+  .about-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(36, 32, 28, 0.3) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Tarjetas flotantes */
+  .about-stamp-card {
+    position: absolute;
+    bottom: -1.25rem;
+    left: -1rem;
+    background-color: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+  }
+
+  .stamp-icon {
+    font-size: 1.75rem;
+  }
+
+  .stamp-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stamp-text strong {
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+  }
+
+  .stamp-text span {
+    font-size: 0.785rem;
+    color: var(--color-sage);
+    font-weight: 500;
+  }
+
+  .about-stat-card {
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    background-color: var(--color-sage);
+    color: #FFFFFF;
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+    max-width: 150px;
+  }
+
+  .stat-number {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    line-height: 1.3;
+    opacity: 0.92;
+  }
+
+  /* Columna de contenido */
+  .about-content-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-heading {
+    font-size: clamp(2.2rem, 3.8vw, 3rem);
+    font-weight: 600;
+    color: var(--color-text-main);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-lead {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--color-terracotta);
+    line-height: 1.45;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-paragraph {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--color-text-body);
+    margin-bottom: 1.15rem;
+  }
+
+  .about-pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0 2.25rem;
+  }
+
+  @media (min-width: 576px) {
+    .about-pillars-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .pillar-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background-color: var(--color-cream);
+    border: 1px solid var(--color-border);
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .pillar-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+  }
+
+  .pillar-info h4 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 0.2rem;
+  }
+
+  .pillar-info p {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .about-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+</style>

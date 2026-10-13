@@ -1,0 +1,134 @@
+---
+import Header from '../components/Header.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
+import AboutUs from '../components/AboutUs.astro';
+import FeaturedCategories from '../components/FeaturedCategories.astro';
+import Catalog from '../components/Catalog.astro';
+import ProductModal from '../components/ProductModal.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+import WhatsAppPreviewModal from '../components/WhatsAppPreviewModal.astro';
+import AdminPanelModal from '../components/AdminPanelModal.astro';
+import BenefitsBanner from '../components/BenefitsBanner.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+import { storeConfig } from '../data/storeConfig.js';
+import { products } from '../data/products.js';
+
+// SEO Structured Data (Schema.org JSON-LD)
+const schemaOrgData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Store",
+      "@id": "https://nubeterapia.com/#store",
+      "name": storeConfig.name,
+      "description": storeConfig.subtagline,
+      "telephone": storeConfig.phone,
+      "priceRange": "€€",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Tenerife",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 28.2916,
+        "longitude": -16.6291
+      }
+    },
+    {
+      "@type": "ItemList",
+      "name": "Catálogo de Jabones Artesanales y Cosmética Natural",
+      "itemListElement": products.slice(0, 10).map((prod, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "Product",
+          "name": prod.name,
+          "description": prod.shortDescription,
+          "image": prod.image,
+          "offers": {
+            "@type": "Offer",
+            "price": prod.price.toFixed(2),
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      }))
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{storeConfig.name} • {storeConfig.tagline} | Jabones Artesanales Canarias</title>
+    <meta name="description" content="Tienda online de jabones de glicerina vegetal hechos a mano en Tenerife. Exfoliantes con manteca de karité y cosmética 100% natural. Pedidos fáciles por WhatsApp." />
+    <meta name="keywords" content="jabones artesanales, jabones de glicerina, exfoliantes naturales, cosmetica natural tenerife, canarias, jabon de lavanda, manteca de karite, hecho a mano" />
+    <meta name="author" content="Nubeterapia" />
+    <link rel="canonical" href="https://nubeterapia.com/" />
+
+    <!-- Open Graph / Redes Sociales -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${storeConfig.name} • ${storeConfig.tagline}`} />
+    <meta property="og:description" content="Cosmética botánica y jabones artesanales de glicerina hechos a mano en Canarias. Descubre el descanso que tu piel merece." />
+    <meta property="og:image" content="/images/hero/hero-spa-artesanal.jpg" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${storeConfig.name} - Jabones Artesanales`} />
+    <meta name="twitter:description" content="Jabones de glicerina 100% naturales, exfoliantes y cremas botánicas en Tenerife." />
+    <meta name="twitter:image" content="/images/hero/hero-spa-artesanal.jpg" />
+
+    <!-- Favicon e Iconografía -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23566E53'><path d='M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z'/></svg>" />
+
+    <!-- Datos estructurados JSON-LD Schema.org -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaOrgData)} />
+  </head>
+
+  <body id="top">
+    <!-- 1. Cabecera -->
+    <Header />
+
+    <!-- 2. Hero Principal con Carrusel -->
+    <main>
+      <HeroCarousel />
+
+      <!-- 3. Quiénes Somos (Historia y Esencia) -->
+      <AboutUs />
+
+      <!-- 4. Categorías Destacadas (Bloques Alternados) -->
+      <FeaturedCategories />
+
+      <!-- 5. Catálogo de Productos con Filtros y Buscador -->
+      <Catalog />
+
+      <!-- 6. Pilares de Calidad y Artesanía -->
+      <BenefitsBanner />
+    </main>
+
+    <!-- 7. Pie de Página -->
+    <Footer />
+
+    <!-- Componentes de Interacción Modal, Drawer y Panel Demo -->
+    <ProductModal />
+    <CartDrawer />
+    <WhatsAppPreviewModal />
+    <AdminPanelModal />
+
+    <!-- Contenedor para Notificaciones Toast -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Script de lógica de la tienda -->
+    <script src="../scripts/shop.js"></script>
+  </body>
+</html>

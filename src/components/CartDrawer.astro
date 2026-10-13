@@ -1,0 +1,424 @@
+---
+import { storeConfig } from '../data/storeConfig.js';
+---
+
+<div class="cart-drawer-backdrop" id="cart-drawer-backdrop" aria-hidden="true"></div>
+
+<aside class="cart-drawer" id="cart-drawer" aria-labelledby="cart-drawer-title" aria-modal="true" role="dialog">
+  <div class="cart-drawer-inner">
+    <!-- Encabezado del carrito -->
+    <div class="cart-drawer-header">
+      <div class="cart-header-title-block">
+        <h3 class="cart-header-title" id="cart-drawer-title">Tu Cesta Botánica</h3>
+        <span class="cart-header-count" id="drawer-items-count">(0 productos)</span>
+      </div>
+      <button type="button" class="cart-close-btn" id="cart-drawer-close" aria-label="Cerrar carrito">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Barra de progreso para Envío Gratuito -->
+    <div class="free-shipping-progress-box">
+      <div class="shipping-progress-text" id="shipping-progress-msg">
+        ¡Añade <strong>{storeConfig.shipping.freeShippingThreshold.toFixed(2)}€</strong> más para conseguir <strong>Envío Gratis</strong>!
+      </div>
+      <div class="shipping-progress-track">
+        <div class="shipping-progress-bar" id="shipping-progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Lista de artículos en el carrito -->
+    <div class="cart-items-container" id="cart-items-list">
+      <!-- Elementos inyectados dinámicamente vía JavaScript -->
+    </div>
+
+    <!-- Estado de carrito vacío -->
+    <div class="cart-empty-state" id="cart-empty-state" style="display: none;">
+      <div class="empty-cart-icon">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-7z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+      </div>
+      <h4>Tu cesta está vacía</h4>
+      <p>Descubre nuestros jabones artesanales de glicerina y llena tu ducha de momentos de nube.</p>
+      <button type="button" class="btn btn-secondary" id="empty-continue-btn">
+        Explorar catálogo
+      </button>
+    </div>
+
+    <!-- Pie y resumen de costes del carrito -->
+    <div class="cart-drawer-footer" id="cart-drawer-footer">
+      <div class="cart-totals-breakdown">
+        <div class="totals-line">
+          <span>Subtotal productos:</span>
+          <strong id="cart-subtotal-val">0,00€</strong>
+        </div>
+        <div class="totals-line">
+          <span>Gastos de envío ({storeConfig.location}):</span>
+          <span id="cart-shipping-val">3,90€</span>
+        </div>
+        <div class="totals-line totals-final-line">
+          <span>Total a pagar:</span>
+          <strong class="cart-final-total" id="cart-total-val">0,00€</strong>
+        </div>
+      </div>
+
+      <div class="cart-actions-stack">
+        <!-- Botón principal de WhatsApp -->
+        <button type="button" class="btn btn-whatsapp cart-checkout-btn" id="cart-checkout-whatsapp-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.031 2C6.5 2 2.016 6.484 2.016 12.016c0 1.766.46 3.484 1.332 5.007L2 22l5.125-1.325c1.47.804 3.125 1.238 4.906 1.238 5.531 0 10.016-4.484 10.016-10.016C22.047 6.484 17.562 2 12.031 2zm5.836 14.18c-.242.684-1.203 1.258-1.742 1.344-.48.078-1.106.14-3.219-.738-2.703-1.121-4.449-3.867-4.586-4.047-.137-.184-1.094-1.457-1.094-2.781s.691-1.977.938-2.246c.246-.27.535-.336.715-.336.184 0 .367.004.527.012.172.008.406-.066.637.488.242.574.82 2.008.895 2.156.074.152.125.332.023.531-.098.203-.152.328-.3.504-.152.176-.32.391-.457.527-.152.148-.313.313-.133.621.18.309.797 1.316 1.711 2.133 1.176 1.051 2.168 1.375 2.477 1.527.309.152.488.133.668-.078.18-.211.777-.902.984-1.215.207-.309.414-.262.695-.156.281.102 1.785.84 2.094.992.309.156.516.234.59.363.074.133.074.773-.168 1.457z"/>
+          </svg>
+          <span>Finalizar pedido por WhatsApp</span>
+        </button>
+
+        <p class="cart-disclaimer">
+          🔒 Sin pasarela de pago. Gestionamos tu pedido directamente por WhatsApp de forma cercana y segura.
+        </p>
+
+        <button type="button" class="clear-cart-link" id="cart-clear-btn">
+          Vaciar cesta
+        </button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .cart-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(24, 21, 18, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal);
+    z-index: 300;
+  }
+
+  .cart-drawer-backdrop.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 90%;
+    max-width: 440px;
+    background-color: #FFFFFF;
+    box-shadow: var(--shadow-drawer);
+    z-index: 310;
+    transform: translateX(100%);
+    transition: transform var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer.is-active {
+    transform: translateX(0);
+  }
+
+  .cart-drawer-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Encabezado */
+  .cart-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-cream);
+  }
+
+  .cart-header-title-block {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .cart-header-title {
+    font-size: 1.35rem;
+    color: var(--color-text-main);
+  }
+
+  .cart-header-count {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .cart-close-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--color-cream-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-main);
+    transition: all var(--transition-fast);
+  }
+
+  .cart-close-btn:hover {
+    background-color: var(--color-sand);
+    transform: rotate(90deg);
+  }
+
+  /* Barra de envío gratis */
+  .free-shipping-progress-box {
+    background-color: var(--color-sage-tint);
+    padding: 0.85rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .shipping-progress-text {
+    font-size: 0.825rem;
+    color: var(--color-sage-hover);
+    margin-bottom: 0.4rem;
+  }
+
+  .shipping-progress-track {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(86, 110, 83, 0.2);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+
+  .shipping-progress-bar {
+    height: 100%;
+    background-color: var(--color-sage);
+    border-radius: var(--radius-pill);
+    transition: width var(--transition-normal);
+  }
+
+  /* Lista de artículos */
+  .cart-items-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  :global(.cart-item) {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-border-light);
+    position: relative;
+  }
+
+  :global(.cart-item-img-wrapper) {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background-color: var(--color-cream);
+    flex-shrink: 0;
+  }
+
+  :global(.cart-item-img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  :global(.cart-item-details) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.cart-item-title) {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+    line-height: 1.25;
+    margin-bottom: 0.2rem;
+  }
+
+  :global(.cart-item-variant-badge) {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-sage-hover);
+    background-color: var(--color-sage-tint);
+    padding: 0.12rem 0.5rem;
+    border-radius: var(--radius-pill);
+    margin-bottom: 0.35rem;
+  }
+
+  :global(.cart-item-unit-price) {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.6rem;
+  }
+
+  :global(.cart-item-actions) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+
+  :global(.cart-qty-controls) {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-cream-subtle);
+  }
+
+  :global(.cart-qty-btn) {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+  }
+
+  :global(.cart-qty-num) {
+    width: 24px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  :global(.cart-item-subtotal) {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+  }
+
+  :global(.cart-item-remove-btn) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    padding: 0.2rem;
+    transition: color var(--transition-fast);
+  }
+
+  :global(.cart-item-remove-btn:hover) {
+    color: var(--color-terracotta);
+  }
+
+  /* Estado vacío */
+  .cart-empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .empty-cart-icon {
+    color: var(--color-sand-dark);
+    margin-bottom: 1rem;
+  }
+
+  .cart-empty-state h4 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cart-empty-state p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    max-width: 280px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Resumen y pie */
+  .cart-drawer-footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-cream);
+  }
+
+  .cart-totals-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .totals-line {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-text-muted);
+  }
+
+  .totals-line strong {
+    color: var(--color-text-main);
+  }
+
+  .totals-final-line {
+    font-size: 1.15rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--color-border);
+    color: var(--color-text-main);
+  }
+
+  .cart-final-total {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--color-sage-hover);
+  }
+
+  .cart-actions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cart-checkout-btn {
+    width: 100%;
+    padding: 0.9rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .cart-disclaimer {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .clear-cart-link {
+    align-self: center;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 0.25rem;
+  }
+
+  .clear-cart-link:hover {
+    color: var(--color-terracotta);
+  }
+</style>
