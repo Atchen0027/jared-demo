@@ -1,5 +1,6 @@
 ---
 import { storeConfig } from '../data/storeConfig.js';
+import { withBase } from '../utils/assets.js';
 ---
 
 <section class="about-us-section" id="quienes-somos" aria-label="Quiénes somos y nuestra historia">
@@ -10,7 +11,7 @@ import { storeConfig } from '../data/storeConfig.js';
         <div class="about-images-composition">
           <div class="about-img-main-card">
             <img 
-              src="/images/posters/ducha-3-jabones-10e.jpg" 
+              src={withBase("/images/about/taller-artesanal-nubeterapia.jpg")} 
               alt="Elaboración artesanal de jabones Nubeterapia en Tenerife" 
               loading="lazy"
               class="about-img-main"

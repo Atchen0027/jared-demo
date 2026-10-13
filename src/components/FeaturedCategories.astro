@@ -37,9 +37,9 @@ import { categories } from '../data/categories.js';
           ))}
         </div>
 
-        <!-- Indicador de desplazamiento / scroll -->
+        <!-- Indicador de desplazamiento / interacción -->
         <div class="deck-scroll-hint" aria-hidden="true">
-          <span class="hint-desktop">Desliza para girar <span class="hint-icon-vert">↕</span></span>
+          <span class="hint-desktop">Explora las colecciones 👆</span>
           <span class="hint-mobile">Desliza lateral <span class="hint-icon-horiz">↔</span></span>
         </div>
       </div>
@@ -163,55 +163,31 @@ import { categories } from '../data/categories.js';
 </section>
 
 <style>
-  /* Pista de categorías: En móvil flujo normal con padding; en desktop pista de 280vh para scroll 3D */
+  /* Pista de categorías: diseño editorial limpio sin exceso de espacio */
   .categories-scroll-track {
     position: relative;
     background-color: var(--color-cream);
-    padding: 2.25rem 0 2.75rem;
+    padding: 3.5rem 0 3rem;
     overflow: hidden;
   }
 
   @media (min-width: 768px) {
     .categories-scroll-track {
-      height: 280vh;
-      margin-top: 2rem;
-      padding: 0;
-      overflow: visible;
+      padding: 4.5rem 0 3.5rem;
     }
   }
 
-  /* Viewport de las tarjetas: Estático en móvil, Sticky en desktop */
+  /* Viewport de las tarjetas */
   .sticky-deck-viewport {
     position: relative;
     width: 100%;
-  }
-
-  @media (min-width: 768px) {
-    .sticky-deck-viewport {
-      position: sticky;
-      top: 75px;
-      height: calc(100vh - 85px);
-      min-height: 600px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
   }
 
   .deck-container {
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-  }
-
-  @media (min-width: 768px) {
-    .deck-container {
-      height: 100%;
-      padding-top: 1rem;
-      padding-bottom: 1.25rem;
-    }
+    gap: 1.5rem;
   }
 
   /* Barra superior */
@@ -372,7 +348,13 @@ import { categories } from '../data/categories.js';
 
   @media (min-width: 768px) {
     .deck-nav-arrow {
-      display: none; /* En escritorio se usa el giro vertical y las pestañas */
+      display: flex;
+    }
+    .deck-nav-prev {
+      left: -18px;
+    }
+    .deck-nav-next {
+      right: -18px;
     }
   }
 
@@ -406,11 +388,7 @@ import { categories } from '../data/categories.js';
       display: block;
       position: relative;
       width: 100%;
-      flex: 1;
-      min-height: 440px;
-      max-height: 540px;
-      perspective: 1800px;
-      -webkit-perspective: 1800px;
+      min-height: 490px;
       padding: 0;
       overflow: visible;
       scroll-snap-type: none;
@@ -452,31 +430,34 @@ import { categories } from '../data/categories.js';
       max-width: none;
       flex: none;
       box-shadow: var(--shadow-lg);
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, filter 0.6s ease;
+      border-radius: var(--radius-lg);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(10px) scale(0.98);
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
     }
 
     .flip-category-card.card-active {
-      transform: rotateY(0deg) translateZ(0) scale(1) !important;
+      transform: translateY(0) scale(1) !important;
       opacity: 1 !important;
+      visibility: visible !important;
       pointer-events: auto !important;
       z-index: 5;
-      filter: drop-shadow(0 20px 30px rgba(36, 32, 28, 0.12)) !important;
     }
 
     .flip-category-card.card-passed {
-      transform: rotateY(-180deg) translateZ(-60px) scale(0.92) !important;
+      transform: translateY(-10px) scale(0.98) !important;
       opacity: 0 !important;
+      visibility: hidden !important;
       pointer-events: none !important;
       z-index: 1;
     }
 
     .flip-category-card.card-waiting {
-      transform: rotateY(180deg) translateZ(-60px) scale(0.92) !important;
+      transform: translateY(10px) scale(0.98) !important;
       opacity: 0 !important;
+      visibility: hidden !important;
       pointer-events: none !important;
       z-index: 1;
     }
@@ -508,24 +489,33 @@ import { categories } from '../data/categories.js';
     justify-content: center;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 768px) {
     .card-inner-surface {
       display: grid;
       grid-template-columns: 1.15fr 1fr;
-      gap: 3rem;
-      padding: 2.5rem 3rem;
+      gap: 2.5rem;
+      padding: 2.25rem 2.75rem;
       height: 100%;
       align-items: center;
-      overflow-y: hidden;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .card-image-col {
       order: 2;
       height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      box-sizing: border-box;
     }
 
     .card-text-col {
       order: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     /* Alternancia de diseño en escritorio: Tarjeta 2 invertida */
@@ -538,31 +528,38 @@ import { categories } from '../data/categories.js';
     }
   }
 
-  /* Contenedor fotográfico */
+  /* Contenedor fotográfico perfectamente centrado con margen inferior garantizado */
   .card-photo-box {
     position: relative;
     width: 100%;
+    max-width: 440px;
     aspect-ratio: 16 / 10;
-    max-height: 210px;
+    max-height: 220px;
     border-radius: var(--radius-md);
     overflow: hidden;
-    background-color: var(--color-sand);
-    box-shadow: var(--shadow-sm);
+    background-color: #F8F5F0;
+    box-shadow: 0 4px 18px rgba(36, 32, 28, 0.08);
+    border: 1px solid var(--color-border);
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 768px) {
     .card-photo-box {
-      aspect-ratio: 1 / 1;
-      max-height: 400px;
+      aspect-ratio: 4 / 3;
+      max-height: 330px;
     }
   }
 
   .card-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
+    background-color: #FAF7F2;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     -webkit-user-drag: none;
     user-select: none;

@@ -211,43 +211,7 @@ class NubeterapiaShop {
       });
     };
 
-    // Scroll vertical para giro 3D (sólo pantallas >= 768px)
-    const handleScroll = () => {
-      if (window.innerWidth < 768) return;
-
-      const rect = track.getBoundingClientRect();
-      const trackHeight = track.offsetHeight;
-      const viewportHeight = window.innerHeight;
-      const totalScrollable = trackHeight - viewportHeight;
-
-      if (totalScrollable <= 0) return;
-
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / totalScrollable));
-
-      let targetIndex = 0;
-      if (progress < 0.35) {
-        targetIndex = 0;
-      } else if (progress < 0.70) {
-        targetIndex = 1;
-      } else {
-        targetIndex = 2;
-      }
-
-      updateDesktopCardIndex(targetIndex);
-    };
-
-    window.addEventListener('scroll', () => {
-      if (window.innerWidth < 768) return;
-      if (!isTicking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          isTicking = false;
-        });
-        isTicking = true;
-      }
-    }, { passive: true });
-
+    // Scroll vertical para giro 3D eliminado para permitir flujo natural sin huecos vacíos
     // Desplazamiento horizontal del carrusel lateral en modo móvil
     const scrollMobileToCard = (targetIdx, smooth = true) => {
       const idx = Math.max(0, Math.min(cards.length - 1, targetIdx));
@@ -329,16 +293,14 @@ class NubeterapiaShop {
 
         if ((isFastSwipe || isStandardSwipe) && Math.abs(deltaX) > Math.abs(deltaY)) {
           if (deltaX < 0) {
-            // Deslizar hacia la izquierda -> avanzar
             scrollMobileToCard(currentCardIndex + 1);
           } else {
-            // Deslizar hacia la derecha -> retroceder
             scrollMobileToCard(currentCardIndex - 1);
           }
         }
       }, { passive: true });
 
-      // Soporte para arrastre con ratón en emuladores y pruebas de escritorio
+      // Soporte para arrastre con ratón en móvil
       let isMouseDown = false;
       let mouseStartX = 0;
       let mouseScrollLeft = 0;
@@ -382,19 +344,29 @@ class NubeterapiaShop {
       });
     }
 
-    // Botones de flecha prev / next para móvil
+    // Botones de flecha prev / next (móvil y escritorio)
     const prevArrow = document.getElementById('deck-nav-prev-btn');
     const nextArrow = document.getElementById('deck-nav-next-btn');
 
     if (prevArrow) {
       prevArrow.addEventListener('click', () => {
-        scrollMobileToCard(currentCardIndex - 1);
+        if (window.innerWidth < 768) {
+          scrollMobileToCard(currentCardIndex - 1);
+        } else {
+          const prev = (currentCardIndex - 1 + cards.length) % cards.length;
+          updateDesktopCardIndex(prev);
+        }
       });
     }
 
     if (nextArrow) {
       nextArrow.addEventListener('click', () => {
-        scrollMobileToCard(currentCardIndex + 1);
+        if (window.innerWidth < 768) {
+          scrollMobileToCard(currentCardIndex + 1);
+        } else {
+          const next = (currentCardIndex + 1) % cards.length;
+          updateDesktopCardIndex(next);
+        }
       });
     }
 
@@ -402,41 +374,24 @@ class NubeterapiaShop {
     stepBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const step = parseInt(btn.getAttribute('data-card-step') || '0', 10);
-
         if (window.innerWidth < 768) {
-          // En móvil: desplaza el carrusel horizontalmente de forma centrada y suave
           scrollMobileToCard(step);
         } else {
-          // En escritorio: scroll vertical hacia el paso correspondiente
           updateDesktopCardIndex(step);
-          const trackRect = track.getBoundingClientRect();
-          const absoluteTrackTop = window.scrollY + trackRect.top;
-          const totalScrollable = track.offsetHeight - window.innerHeight;
-          const targetScroll = absoluteTrackTop + (step * (totalScrollable / 2));
-
-          window.scrollTo({
-            top: targetScroll,
-            behavior: 'smooth'
-          });
         }
       });
     });
 
-    // Sincronización al cambiar el tamaño de ventana
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768) {
-        handleScroll();
-      } else {
-        updateIndicators(currentCardIndex);
-      }
-    }, { passive: true });
-
     // Inicialización al cargar la web
-    if (window.innerWidth >= 768) {
-      handleScroll();
-    } else {
-      updateIndicators(0);
-    }
+    updateIndicators(0);
+    cards.forEach((card, idx) => {
+      card.classList.remove('card-active', 'card-passed', 'card-waiting');
+      if (idx === 0) {
+        card.classList.add('card-active');
+      } else {
+        card.classList.add('card-waiting');
+      }
+    });
   }
 
   // ---------------------------------------------------------------------------
