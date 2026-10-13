@@ -35,6 +35,7 @@ class NubeterapiaShop {
     this.initProductModal();
     this.initCartDrawer();
     this.initWhatsAppPreview();
+    this.initSeasonalPromo();
     this.initAdminPanelDemo();
     this.initMobileNav();
     this.initGlobalTriggers();
@@ -1225,6 +1226,7 @@ class NubeterapiaShop {
   initWhatsAppPreview() {
     this.checkoutBtn = document.getElementById('cart-checkout-whatsapp-btn');
     this.waModal = document.getElementById('whatsapp-modal');
+    this.waChatCanvas = this.waModal ? this.waModal.querySelector('.wa-chat-canvas') : null;
     this.waBackdrop = document.getElementById('whatsapp-modal-backdrop');
     this.waCloseBtn = document.getElementById('wa-modal-close');
     this.waPreviewContent = document.getElementById('wa-preview-content');
@@ -1266,6 +1268,10 @@ class NubeterapiaShop {
 
   openWhatsAppPreview() {
     if (!this.waModal) return;
+
+    if (this.waChatCanvas) {
+      this.waChatCanvas.scrollTop = 0;
+    }
 
     const readableText = this.getHumanReadableMessage();
     if (this.waPreviewContent) {
@@ -1387,6 +1393,67 @@ class NubeterapiaShop {
         this.showToast(`🔄 Simulación: Producto ${status} en el catálogo.`);
       });
     });
+
+    // Gestión de Oferta de Temporada desde el Panel de Control
+    const promoSaveBtn = document.getElementById('admin-promo-save-btn');
+    const promoPreviewBtn = document.getElementById('admin-promo-preview-btn');
+    const promoEnableInput = document.getElementById('admin-promo-enable');
+    const promoBadgeInput = document.getElementById('admin-promo-badge-input');
+    const promoDiscountInput = document.getElementById('admin-promo-discount-badge-input');
+    const promoTitleInput = document.getElementById('admin-promo-title-input');
+    const promoDescInput = document.getElementById('admin-promo-desc-input');
+    const promoCodeInput = document.getElementById('admin-promo-code-input');
+    const promoCtaInput = document.getElementById('admin-promo-cta-input');
+
+    if (storeConfig.seasonalPromo) {
+      if (promoEnableInput) promoEnableInput.checked = storeConfig.seasonalPromo.enabled !== false;
+      if (promoBadgeInput && storeConfig.seasonalPromo.badge) promoBadgeInput.value = storeConfig.seasonalPromo.badge;
+      if (promoDiscountInput && storeConfig.seasonalPromo.discountBadge) promoDiscountInput.value = storeConfig.seasonalPromo.discountBadge;
+      if (promoTitleInput && storeConfig.seasonalPromo.title) promoTitleInput.value = storeConfig.seasonalPromo.title;
+      if (promoDescInput && storeConfig.seasonalPromo.description) promoDescInput.value = storeConfig.seasonalPromo.description;
+      if (promoCodeInput && storeConfig.seasonalPromo.code) promoCodeInput.value = storeConfig.seasonalPromo.code;
+      if (promoCtaInput && storeConfig.seasonalPromo.ctaText) promoCtaInput.value = storeConfig.seasonalPromo.ctaText;
+    }
+
+    if (promoSaveBtn) {
+      promoSaveBtn.addEventListener('click', () => {
+        const newPromoConfig = {
+          enabled: promoEnableInput ? promoEnableInput.checked : true,
+          badge: promoBadgeInput ? promoBadgeInput.value.trim() : '🌸 Oferta Especial de Temporada',
+          discountBadge: promoDiscountInput ? promoDiscountInput.value.trim() : '-15% DTO',
+          title: promoTitleInput ? promoTitleInput.value.trim() : '15% DTO en tu Primer Pedido',
+          description: promoDescInput ? promoDescInput.value.trim() : '',
+          code: promoCodeInput ? promoCodeInput.value.trim().toUpperCase() : 'NUBETEMPORADA',
+          ctaText: promoCtaInput ? promoCtaInput.value.trim() : 'Aprovechar Oferta'
+        };
+
+        storeConfig.seasonalPromo = { ...storeConfig.seasonalPromo, ...newPromoConfig };
+        try {
+          localStorage.setItem('nubeterapia_seasonal_promo', JSON.stringify(storeConfig.seasonalPromo));
+          sessionStorage.removeItem('nubeterapia_promo_dismissed'); // Permitir previsualizar de nuevo
+        } catch (e) {
+          console.warn('Could not save promo config:', e);
+        }
+
+        this.updateSeasonalPromoUI(storeConfig.seasonalPromo);
+
+        const previewCodeTag = document.getElementById('admin-preview-code-tag');
+        const previewBadgeTag = document.getElementById('admin-preview-badge-tag');
+        if (previewCodeTag) previewCodeTag.textContent = storeConfig.seasonalPromo.code;
+        if (previewBadgeTag) previewBadgeTag.textContent = storeConfig.seasonalPromo.discountBadge;
+
+        this.showToast('✅ ¡Oferta de temporada guardada y sincronizada en la tienda!');
+      });
+    }
+
+    if (promoPreviewBtn) {
+      promoPreviewBtn.addEventListener('click', () => {
+        closeAdmin();
+        setTimeout(() => {
+          this.openSeasonalPromo();
+        }, 250);
+      });
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -1483,6 +1550,118 @@ class NubeterapiaShop {
         }
       }
     });
+  }
+
+  // ---------------------------------------------------------------------------
+  // 8. POP-UP DE OFERTA DE TEMPORADA (CONFIGURABLE VÍA PANEL)
+  // ---------------------------------------------------------------------------
+  initSeasonalPromo() {
+    this.promoModal = document.getElementById('seasonal-promo-modal');
+    this.promoBackdrop = document.getElementById('seasonal-promo-backdrop');
+    this.promoCloseBtn = document.getElementById('seasonal-promo-close');
+    this.promoDismissBtn = document.getElementById('seasonal-promo-dismiss-btn');
+    this.promoCopyBtn = document.getElementById('seasonal-promo-copy-btn');
+    this.promoCtaBtn = document.getElementById('seasonal-promo-cta-btn');
+
+    // Cargar ajustes guardados en localStorage (si existen desde el panel de control)
+    try {
+      const savedPromo = localStorage.getItem('nubeterapia_seasonal_promo');
+      if (savedPromo) {
+        const parsed = JSON.parse(savedPromo);
+        storeConfig.seasonalPromo = { ...storeConfig.seasonalPromo, ...parsed };
+      }
+    } catch (e) {
+      console.warn('Error reading seasonal promo config:', e);
+    }
+
+    // Actualizar elementos en el DOM con la configuración activa
+    this.updateSeasonalPromoUI(storeConfig.seasonalPromo);
+
+    // Eventos de cierre
+    if (this.promoCloseBtn) {
+      this.promoCloseBtn.addEventListener('click', () => this.closeSeasonalPromo());
+    }
+    if (this.promoDismissBtn) {
+      this.promoDismissBtn.addEventListener('click', () => this.closeSeasonalPromo());
+    }
+    if (this.promoBackdrop) {
+      this.promoBackdrop.addEventListener('click', () => this.closeSeasonalPromo());
+    }
+
+    // Evento Copiar Código
+    if (this.promoCopyBtn) {
+      this.promoCopyBtn.addEventListener('click', () => {
+        const code = storeConfig.seasonalPromo?.code || 'NUBETEMPORADA';
+        navigator.clipboard.writeText(code).then(() => {
+          this.promoCopyBtn.classList.add('is-copied');
+          const label = document.getElementById('seasonal-copy-label');
+          if (label) label.textContent = '¡Copiado!';
+          this.showToast(`🎉 Código ${code} copiado al portapapeles.`);
+          setTimeout(() => {
+            this.promoCopyBtn.classList.remove('is-copied');
+            if (label) label.textContent = 'Copiar';
+          }, 3000);
+        });
+      });
+    }
+
+    // Evento Botón CTA
+    if (this.promoCtaBtn) {
+      this.promoCtaBtn.addEventListener('click', () => {
+        const code = storeConfig.seasonalPromo?.code || 'NUBETEMPORADA';
+        try {
+          navigator.clipboard.writeText(code);
+        } catch (_) {}
+        this.closeSeasonalPromo();
+        const catalogEl = document.getElementById('catalogo');
+        if (catalogEl) {
+          catalogEl.scrollIntoView({ behavior: 'smooth' });
+        }
+        this.showToast(`🌿 ¡Cupón ${code} listo! Selecciona tus productos y añádelos a la cesta.`);
+      });
+    }
+
+    // Lanzamiento automático tras 2.2 segundos si no fue cerrado en esta sesión y está activo
+    const isDismissed = sessionStorage.getItem('nubeterapia_promo_dismissed');
+    if (!isDismissed && storeConfig.seasonalPromo?.enabled !== false) {
+      setTimeout(() => {
+        // Solo abrir si no hay otro modal abierto
+        const isAnyModalActive = document.querySelector('.product-modal.is-active, .whatsapp-modal.is-active, .admin-modal.is-active');
+        if (!isAnyModalActive) {
+          this.openSeasonalPromo();
+        }
+      }, 2200);
+    }
+  }
+
+  openSeasonalPromo() {
+    if (!this.promoModal || !this.promoBackdrop) return;
+    this.promoBackdrop.classList.add('is-active');
+    this.promoModal.classList.add('is-active');
+  }
+
+  closeSeasonalPromo() {
+    if (!this.promoModal || !this.promoBackdrop) return;
+    this.promoBackdrop.classList.remove('is-active');
+    this.promoModal.classList.remove('is-active');
+    sessionStorage.setItem('nubeterapia_promo_dismissed', 'true');
+  }
+
+  updateSeasonalPromoUI(promo) {
+    if (!promo) return;
+    const badgeEl = document.getElementById('seasonal-promo-badge');
+    const titleEl = document.getElementById('seasonal-promo-title');
+    const descEl = document.getElementById('seasonal-promo-desc');
+    const codeEl = document.getElementById('seasonal-promo-code');
+    const discountEl = document.getElementById('seasonal-promo-discount-text');
+    const ctaEl = document.getElementById('seasonal-promo-cta-label');
+
+    if (badgeEl && promo.badge) badgeEl.textContent = promo.badge;
+    if (titleEl && promo.title) titleEl.textContent = promo.title;
+    if (descEl && promo.description) descEl.textContent = promo.description;
+    if (codeEl && promo.code) codeEl.textContent = promo.code;
+    if (discountEl && promo.discountBadge) discountEl.textContent = promo.discountBadge;
+    if (ctaEl && promo.ctaText) ctaEl.textContent = promo.ctaText;
   }
 
   showToast(message) {

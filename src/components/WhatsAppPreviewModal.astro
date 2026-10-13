@@ -244,7 +244,6 @@ Cargando mensaje del pedido...
     color: #53BDEB;
   }
 
-  /* Footer */
   .wa-footer-actions {
     padding: 1.15rem 1.25rem;
     background-color: #FFFFFF;
@@ -261,5 +260,99 @@ Cargando mensaje del pedido...
 
   .wa-launch-btn {
     flex: 1.4;
+    white-space: nowrap;
+  }
+
+  /* Responsive Móvil */
+  @media (max-width: 640px) {
+    .whatsapp-modal {
+      width: 94%;
+      max-width: 440px;
+      max-height: 86dvh;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .wa-modal-inner {
+      max-height: 86dvh;
+      min-height: 0;
+      border-radius: var(--radius-md);
+    }
+
+    .wa-header {
+      padding: 0.75rem 0.95rem;
+    }
+
+    .wa-avatar {
+      width: 32px;
+      height: 32px;
+    }
+
+    .wa-avatar svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .wa-title {
+      font-size: 0.92rem;
+    }
+
+    .wa-subtitle {
+      font-size: 0.68rem;
+    }
+
+    .wa-demo-banner {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.72rem;
+      line-height: 1.35;
+      gap: 0.45rem;
+    }
+
+    .wa-demo-banner p {
+      margin: 0;
+      font-size: 0.7rem;
+    }
+
+    .wa-chat-canvas {
+      padding: 0.85rem 0.75rem;
+      min-height: 0;
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    .wa-message-bubble {
+      max-width: 100%;
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      border-radius: 10px;
+    }
+
+    .wa-message-text {
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .wa-footer-actions {
+      padding: 0.65rem 0.85rem;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .wa-launch-btn {
+      width: 100%;
+      order: 1;
+      justify-content: center;
+      padding: 0.75rem 1rem;
+      font-size: 0.92rem;
+    }
+
+    .wa-copy-btn {
+      width: 100%;
+      order: 2;
+      justify-content: center;
+      padding: 0.55rem 1rem;
+      font-size: 0.82rem;
+    }
   }
 </style>

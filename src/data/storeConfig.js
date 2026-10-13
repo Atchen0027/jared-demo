@@ -21,5 +21,15 @@ export const storeConfig = {
     { icon: "droplet", label: "Glicerina Vegetal Pura" },
     { icon: "shield-check", label: "Sin Parabenos ni Químicos" },
     { icon: "sparkles", label: "Apto para todo tipo de piel" }
-  ]
+  ],
+  seasonalPromo: {
+    enabled: true,
+    badge: "🌸 Oferta Especial de Temporada",
+    title: "15% DTO en tu Primer Pedido",
+    description: "Descubre el descanso que tu piel merece con nuestros jabones de glicerina y cosmética botánica artesanal. Aplica el cupón al tramitar tu pedido por WhatsApp y recibe además un jaboncito de muestra de regalo.",
+    code: "NUBETEMPORADA",
+    discountBadge: "-15% DTO",
+    image: "/images/products/caja-regalo-artesanal.jpg",
+    ctaText: "Aprovechar Oferta"
+  }
 };

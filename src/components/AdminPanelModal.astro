@@ -91,6 +91,14 @@ import { storeConfig } from '../data/storeConfig.js';
           <span class="tab-subtext">Envíos & Tienda</span>
         </div>
       </button>
+
+      <button type="button" role="tab" class="admin-tab" data-admin-tab="promo" aria-selected="false">
+        <span class="tab-icon">🎁</span>
+        <div class="admin-tab-text-wrap">
+          <span class="tab-title">Oferta Temporada</span>
+          <span class="tab-subtext">Pop-up & Cupón</span>
+        </div>
+      </button>
     </nav>
 
     <!-- Cuerpo principal con las secciones del panel -->
@@ -295,6 +303,80 @@ import { storeConfig } from '../data/storeConfig.js';
             <label class="settings-label">Umbral de Envío Gratuito (€)</label>
             <input type="number" step="1" value={storeConfig.shipping.freeShippingThreshold.toFixed(2)} class="settings-input" />
             <span class="settings-help">Pedidos superiores a este importe no pagarán gastos de entrega.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. PESTAÑA OFERTA DE TEMPORADA (POP-UP CONFIGURABLE) -->
+      <section class="admin-tab-pane" id="tab-pane-promo" style="display: none;">
+        <div class="pane-action-header">
+          <div>
+            <h4 class="pane-title">Oferta Especial de la Temporada</h4>
+            <p class="pane-desc">Configura el mensaje emergente promocional, el código de descuento y el beneficio de bienvenida.</p>
+          </div>
+          <div class="pane-action-btns-group">
+            <button type="button" class="btn btn-secondary btn-sm admin-sim-btn" id="admin-promo-preview-btn">
+              <span>👁️ Previsualizar Pop-up</span>
+            </button>
+            <button type="button" class="btn btn-primary btn-sm admin-sim-btn" id="admin-promo-save-btn">
+              <span>💾 Guardar Oferta</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="admin-settings-form-grid">
+          <div class="settings-field-group field-full-width">
+            <div class="promo-toggle-card">
+              <div class="promo-toggle-info">
+                <strong>Estado del Pop-up Promocional</strong>
+                <span>Mostrar ventana emergente de bienvenida a los nuevos visitantes de la web</span>
+              </div>
+              <label class="switch-toggle">
+                <input type="checkbox" id="admin-promo-enable" checked />
+                <span class="slider-round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-field-group">
+            <label class="settings-label" for="admin-promo-badge-input">Etiqueta de la Temporada / Badge</label>
+            <input type="text" id="admin-promo-badge-input" value={storeConfig.seasonalPromo?.badge || "🌸 Oferta Especial de Temporada"} class="settings-input" />
+            <span class="settings-help">Texto que aparece en la píldora superior (ej. 🌸 Oferta de Primavera).</span>
+          </div>
+
+          <div class="settings-field-group">
+            <label class="settings-label" for="admin-promo-discount-badge-input">Insignia de Descuento</label>
+            <input type="text" id="admin-promo-discount-badge-input" value={storeConfig.seasonalPromo?.discountBadge || "-15% DTO"} class="settings-input" />
+            <span class="settings-help">Etiqueta destacada sobre la foto (ej. -15% DTO, 2x1, Regalo).</span>
+          </div>
+
+          <div class="settings-field-group field-full-width">
+            <label class="settings-label" for="admin-promo-title-input">Título de la Oferta</label>
+            <input type="text" id="admin-promo-title-input" value={storeConfig.seasonalPromo?.title || "15% DTO en tu Primer Pedido"} class="settings-input" />
+          </div>
+
+          <div class="settings-field-group field-full-width">
+            <label class="settings-label" for="admin-promo-desc-input">Descripción / Beneficio de la Promoción</label>
+            <textarea id="admin-promo-desc-input" class="settings-input settings-textarea" rows="3">{storeConfig.seasonalPromo?.description || "Descubre el descanso que tu piel merece con nuestros jabones de glicerina y cosmética botánica artesanal. Aplica el cupón al tramitar tu pedido por WhatsApp y recibe además un jaboncito de muestra de regalo."}</textarea>
+          </div>
+
+          <div class="settings-field-group">
+            <label class="settings-label" for="admin-promo-code-input">Código Promocional (Cupón)</label>
+            <input type="text" id="admin-promo-code-input" value={storeConfig.seasonalPromo?.code || "NUBETEMPORADA"} class="settings-input font-mono" />
+            <span class="settings-help">Los clientes podrán copiarlo con un clic para enviarlo por WhatsApp.</span>
+          </div>
+
+          <div class="settings-field-group">
+            <label class="settings-label" for="admin-promo-cta-input">Texto del Botón de Acción (CTA)</label>
+            <input type="text" id="admin-promo-cta-input" value={storeConfig.seasonalPromo?.ctaText || "Aprovechar Oferta"} class="settings-input" />
+          </div>
+        </div>
+
+        <div class="admin-promo-preview-box">
+          <span class="preview-box-tag">💡 Vista previa de valores guardados:</span>
+          <div class="preview-box-details">
+            <p><strong>Cupón:</strong> <code id="admin-preview-code-tag">{storeConfig.seasonalPromo?.code || "NUBETEMPORADA"}</code> • <strong>Descuento:</strong> <span id="admin-preview-badge-tag">{storeConfig.seasonalPromo?.discountBadge || "-15% DTO"}</span></p>
+            <p class="preview-box-hint">Pulsa en <strong>«👁️ Previsualizar Pop-up»</strong> para abrir el modal en vivo tal y como lo experimentan tus clientes.</p>
           </div>
         </div>
       </section>
@@ -1103,5 +1185,92 @@ import { storeConfig } from '../data/storeConfig.js';
   .settings-help {
     font-size: 0.75rem;
     color: var(--color-text-muted);
+  }
+
+  /* Estilos específicos para la pestaña de Oferta de Temporada */
+  .pane-action-btns-group {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .field-full-width {
+    grid-column: 1 / -1;
+  }
+
+  .settings-textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono, monospace);
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .promo-toggle-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background-color: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    gap: 1rem;
+  }
+
+  .promo-toggle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .promo-toggle-info strong {
+    font-size: 0.92rem;
+    color: var(--color-text-main);
+  }
+
+  .promo-toggle-info span {
+    font-size: 0.78rem;
+    color: var(--color-text-body);
+  }
+
+  .admin-promo-preview-box {
+    margin-top: 1.25rem;
+    background-color: #F8F6F0;
+    border: 1px dashed var(--color-gold);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+  }
+
+  .preview-box-tag {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #7A6229;
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .preview-box-details p {
+    margin: 0.2rem 0;
+    font-size: 0.85rem;
+    color: var(--color-text-main);
+  }
+
+  .preview-box-hint {
+    font-size: 0.78rem !important;
+    color: var(--color-text-muted) !important;
+  }
+
+  .preview-box-details code {
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-weight: 700;
+    color: var(--color-terracotta);
   }
 </style>
