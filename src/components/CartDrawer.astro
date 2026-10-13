@@ -118,13 +118,17 @@ import { storeConfig } from '../data/storeConfig.js';
     box-shadow: var(--shadow-drawer);
     z-index: 310;
     transform: translateX(100%);
-    transition: transform var(--transition-smooth);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform var(--transition-smooth), visibility var(--transition-smooth);
     display: flex;
     flex-direction: column;
   }
 
   .cart-drawer.is-active {
     transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .cart-drawer-inner {

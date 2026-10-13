@@ -247,21 +247,41 @@ import { storeConfig } from '../data/storeConfig.js';
     .header-main {
       padding: 0.55rem 0;
     }
+    .header-main .container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
   }
 
   .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    .header-inner {
+      gap: 1.5rem;
+    }
   }
 
   /* Logotipo */
   .brand-logo {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.45rem;
     color: var(--color-text-main);
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  @media (min-width: 768px) {
+    .brand-logo {
+      gap: 0.75rem;
+    }
   }
 
   .logo-mark {
@@ -270,6 +290,7 @@ import { storeConfig } from '../data/storeConfig.js';
     align-items: center;
     justify-content: center;
     transition: transform var(--transition-fast);
+    flex-shrink: 0;
   }
 
   .brand-logo:hover .logo-mark {
@@ -279,24 +300,27 @@ import { storeConfig } from '../data/storeConfig.js';
   .logo-text {
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
 
   .logo-title {
     font-family: var(--font-serif);
-    font-size: 1.7rem;
+    font-size: clamp(1.15rem, 4vw, 1.7rem);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     line-height: 1;
     color: var(--color-text-main);
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .logo-subtitle {
-    font-size: 0.62rem;
+    font-size: clamp(0.48rem, 1.8vw, 0.62rem);
     font-weight: 600;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     color: var(--color-sage);
-    margin-top: 0.2rem;
+    margin-top: 0.15rem;
+    white-space: nowrap;
   }
 
   /* Navegación escritorio */
@@ -349,12 +373,19 @@ import { storeConfig } from '../data/storeConfig.js';
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .header-actions {
+      gap: 0.85rem;
+    }
   }
 
   .action-btn {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -363,6 +394,14 @@ import { storeConfig } from '../data/storeConfig.js';
     background-color: var(--color-cream-subtle);
     border: 1px solid var(--color-border);
     transition: all var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .action-btn {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   .action-btn:hover {
@@ -415,13 +454,22 @@ import { storeConfig } from '../data/storeConfig.js';
   .cart-trigger-btn {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.5rem 0.9rem;
+    gap: 0.45rem;
+    padding: 0.45rem 0.65rem;
     background-color: #FFFFFF;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-pill);
     box-shadow: var(--shadow-xs);
     transition: all var(--transition-fast);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .cart-trigger-btn {
+      gap: 0.6rem;
+      padding: 0.5rem 0.9rem;
+    }
   }
 
   .cart-trigger-btn:hover {
@@ -435,6 +483,7 @@ import { storeConfig } from '../data/storeConfig.js';
     display: flex;
     align-items: center;
     color: var(--color-sage);
+    flex-shrink: 0;
   }
 
   .cart-count-badge {
@@ -462,11 +511,19 @@ import { storeConfig } from '../data/storeConfig.js';
   }
 
   .cart-total-badge {
-    font-size: 0.85rem;
+    display: none;
+    font-size: 0.82rem;
     font-weight: 700;
     color: var(--color-sage);
     padding-left: 0.25rem;
     border-left: 1px solid var(--color-border);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 480px) {
+    .cart-total-badge {
+      display: inline-block;
+    }
   }
 
   @media (min-width: 640px) {
@@ -526,7 +583,9 @@ import { storeConfig } from '../data/storeConfig.js';
     box-shadow: 10px 0 35px rgba(0, 0, 0, 0.35);
     z-index: 999;
     transform: translateX(-100%);
-    transition: transform var(--transition-smooth);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform var(--transition-smooth), visibility var(--transition-smooth);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -536,6 +595,8 @@ import { storeConfig } from '../data/storeConfig.js';
 
   .mobile-nav-panel.is-active {
     transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .mobile-nav-header {
