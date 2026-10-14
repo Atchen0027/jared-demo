@@ -18,8 +18,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Top Ventas",
-    image: "/images/products/jabon-lavanda.jpg",
-    gallery: ["/images/products/jabon-lavanda.jpg", "/images/posters/catalogo-jabones-glicerina.jpg"]
+    image: "/images/products/jabon-lavanda.webp",
+    gallery: ["/images/products/jabon-lavanda.webp", "/images/posters/catalogo-jabones-glicerina.webp"]
   },
   {
     id: "jabon-miel-curcuma",
@@ -37,8 +37,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Brillo Natural",
-    image: "/images/products/jabon-miel-curcuma.jpg",
-    gallery: ["/images/products/jabon-miel-curcuma.jpg", "/images/posters/catalogo-jabones-glicerina.jpg"]
+    image: "/images/products/jabon-miel-curcuma.webp",
+    gallery: ["/images/products/jabon-miel-curcuma.webp", "/images/posters/catalogo-jabones-glicerina.webp"]
   },
   {
     id: "jabon-coco-avena",
@@ -56,8 +56,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Extra Nutritivo",
-    image: "/images/products/jabon-coco-avena.jpg",
-    gallery: ["/images/products/jabon-coco-avena.jpg", "/images/posters/catalogo-jabones-glicerina.jpg"]
+    image: "/images/products/jabon-coco-avena.webp",
+    gallery: ["/images/products/jabon-coco-avena.webp", "/images/posters/catalogo-jabones-glicerina.webp"]
   },
   {
     id: "jabon-chocolate",
@@ -75,8 +75,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Gourmet",
-    image: "/images/products/jabon-chocolate.jpg",
-    gallery: ["/images/products/jabon-chocolate.jpg", "/images/posters/catalogo-jabones-glicerina.jpg"]
+    image: "/images/products/jabon-chocolate.webp",
+    gallery: ["/images/products/jabon-chocolate.webp", "/images/posters/catalogo-jabones-glicerina.webp"]
   },
   {
     id: "jabon-naranja",
@@ -94,8 +94,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Energizante",
-    image: "/images/products/jabon-naranja.jpg",
-    gallery: ["/images/products/jabon-naranja.jpg", "/images/posters/catalogo-jabones-glicerina.jpg"]
+    image: "/images/products/jabon-naranja.webp",
+    gallery: ["/images/products/jabon-naranja.webp", "/images/posters/catalogo-jabones-glicerina.webp"]
   },
   {
     id: "jabon-arroz",
@@ -113,8 +113,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Efecto Porcelana",
-    image: "/images/products/jabon-arroz.jpg",
-    gallery: ["/images/products/jabon-arroz.jpg", "/images/posters/catalogo-jabones-glicerina.jpg"]
+    image: "/images/products/jabon-arroz.webp",
+    gallery: ["/images/products/jabon-arroz.webp", "/images/posters/catalogo-jabones-glicerina.webp"]
   },
   {
     id: "jabon-miel-leche",
@@ -132,8 +132,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Super Suave",
-    image: "/images/products/jabon-miel-leche.jpg",
-    gallery: ["/images/products/jabon-miel-leche.jpg", "/images/posters/catalogo-jabones-glicerina.jpg"]
+    image: "/images/products/jabon-miel-leche.webp",
+    gallery: ["/images/products/jabon-miel-leche.webp", "/images/posters/catalogo-jabones-glicerina.webp"]
   },
   {
     id: "jabon-coco-cereza",
@@ -151,8 +151,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Frutal Dulce",
-    image: "/images/products/jabon-coco-cereza.jpg",
-    gallery: ["/images/products/jabon-coco-cereza.jpg", "/images/posters/catalogo-jabones-glicerina.jpg"]
+    image: "/images/products/jabon-coco-cereza.webp",
+    gallery: ["/images/products/jabon-coco-cereza.webp", "/images/posters/catalogo-jabones-glicerina.webp"]
   },
   {
     id: "jabon-masajeador-mango-xxl",
@@ -170,8 +170,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Edición Limitada XXL",
-    image: "/images/products/jabon-masajeador-mango-xxl.jpg",
-    gallery: ["/images/products/jabon-masajeador-mango-xxl.jpg", "/images/posters/jabon-masajeador-mango-xxl.jpg"]
+    image: "/images/products/jabon-masajeador-mango-xxl.webp",
+    gallery: ["/images/products/jabon-masajeador-mango-xxl.webp", "/images/posters/jabon-masajeador-mango-xxl.webp"]
   },
   {
     id: "caja-regalo-8-jabones",
@@ -189,8 +189,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Regalo Especial • 30€",
-    image: "/images/products/caja-regalo-artesanal.jpg",
-    gallery: ["/images/products/caja-regalo-artesanal.jpg", "/images/posters/caja-regalo-8-jabones.jpg"]
+    image: "/images/products/caja-regalo-artesanal.webp",
+    gallery: ["/images/products/caja-regalo-artesanal.webp", "/images/posters/caja-regalo-8-jabones.webp"]
   },
 
   // --- JABONES EXFOLIANTES CORPORALES EN TARRO (250g) ---
@@ -210,8 +210,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Fórmula 250g",
-    image: "/images/products/exfoliante-coco-avena.jpg",
-    gallery: ["/images/products/exfoliante-coco-avena.jpg", "/images/posters/exfoliantes-corporales-tarros.jpg"]
+    image: "/images/products/exfoliante-coco-avena.webp",
+    gallery: ["/images/products/exfoliante-coco-avena.webp", "/images/posters/exfoliantes-corporales-tarros.webp"]
   },
   {
     id: "exfoliante-seda-cacao",
@@ -229,8 +229,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Fórmula 250g",
-    image: "/images/products/exfoliante-seda-cacao.jpg",
-    gallery: ["/images/products/exfoliante-seda-cacao.jpg", "/images/posters/exfoliantes-corporales-tarros.jpg"]
+    image: "/images/products/exfoliante-seda-cacao.webp",
+    gallery: ["/images/products/exfoliante-seda-cacao.webp", "/images/posters/exfoliantes-corporales-tarros.webp"]
   },
   {
     id: "exfoliante-lavanda-spa",
@@ -248,8 +248,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Efecto Spa",
-    image: "/images/products/exfoliante-lavanda-spa.jpg",
-    gallery: ["/images/products/exfoliante-lavanda-spa.jpg", "/images/posters/exfoliantes-corporales-tarros.jpg"]
+    image: "/images/products/exfoliante-lavanda-spa.webp",
+    gallery: ["/images/products/exfoliante-lavanda-spa.webp", "/images/posters/exfoliantes-corporales-tarros.webp"]
   },
   {
     id: "exfoliante-miel-curcuma",
@@ -267,8 +267,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Super Ventas",
-    image: "/images/products/exfoliante-miel-curcuma.jpg",
-    gallery: ["/images/products/exfoliante-miel-curcuma.jpg", "/images/posters/exfoliantes-corporales-tarros.jpg"]
+    image: "/images/products/exfoliante-miel-curcuma.webp",
+    gallery: ["/images/products/exfoliante-miel-curcuma.webp", "/images/posters/exfoliantes-corporales-tarros.webp"]
   },
   {
     id: "exfoliante-arroz-porcelana",
@@ -286,8 +286,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Fórmula 250g",
-    image: "/images/products/exfoliante-arroz-porcelana.jpg",
-    gallery: ["/images/products/exfoliante-arroz-porcelana.jpg", "/images/posters/exfoliantes-corporales-tarros.jpg"]
+    image: "/images/products/exfoliante-arroz-porcelana.webp",
+    gallery: ["/images/products/exfoliante-arroz-porcelana.webp", "/images/posters/exfoliantes-corporales-tarros.webp"]
   },
   {
     id: "exfoliante-citrico-naranja",
@@ -305,8 +305,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Fórmula 250g",
-    image: "/images/products/exfoliante-citrico-naranja.jpg",
-    gallery: ["/images/products/exfoliante-citrico-naranja.jpg", "/images/posters/exfoliantes-corporales-tarros.jpg"]
+    image: "/images/products/exfoliante-citrico-naranja.webp",
+    gallery: ["/images/products/exfoliante-citrico-naranja.webp", "/images/posters/exfoliantes-corporales-tarros.webp"]
   },
   {
     id: "exfoliante-cremosa-leche-miel",
@@ -324,8 +324,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Fórmula 250g",
-    image: "/images/products/exfoliante-cremosa-leche-miel.jpg",
-    gallery: ["/images/products/exfoliante-cremosa-leche-miel.jpg", "/images/posters/exfoliantes-corporales-tarros.jpg"]
+    image: "/images/products/exfoliante-cremosa-leche-miel.webp",
+    gallery: ["/images/products/exfoliante-cremosa-leche-miel.webp", "/images/posters/exfoliantes-corporales-tarros.webp"]
   },
   {
     id: "exfoliante-tropical-cereza",
@@ -343,8 +343,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "Fórmula 250g",
-    image: "/images/products/exfoliante-tropical-cereza.jpg",
-    gallery: ["/images/products/exfoliante-tropical-cereza.jpg", "/images/posters/exfoliantes-corporales-tarros.jpg"]
+    image: "/images/products/exfoliante-tropical-cereza.webp",
+    gallery: ["/images/products/exfoliante-tropical-cereza.webp", "/images/posters/exfoliantes-corporales-tarros.webp"]
   },
 
   // --- CREMAS Y MANTECAS BOTÁNICAS ---
@@ -364,8 +364,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Favorito Nubeterapia",
-    image: "/images/products/crema-karite-vainilla.jpg",
-    gallery: ["/images/products/crema-karite-vainilla.jpg"]
+    image: "/images/products/crema-karite-vainilla.webp",
+    gallery: ["/images/products/crema-karite-vainilla.webp"]
   },
   {
     id: "crema-aloe-canarias",
@@ -383,8 +383,8 @@ const rawProducts = [
     inStock: true,
     featured: true,
     badge: "Aloe de Canarias",
-    image: "/images/products/crema-aloe-canarias.jpg",
-    gallery: ["/images/products/crema-aloe-canarias.jpg"]
+    image: "/images/products/crema-aloe-canarias.webp",
+    gallery: ["/images/products/crema-aloe-canarias.webp"]
   },
   {
     id: "crema-miel-almendras",
@@ -402,8 +402,8 @@ const rawProducts = [
     inStock: true,
     featured: false,
     badge: "100% Natural",
-    image: "/images/products/crema-miel-almendras.jpg",
-    gallery: ["/images/products/crema-miel-almendras.jpg"]
+    image: "/images/products/crema-miel-almendras.webp",
+    gallery: ["/images/products/crema-miel-almendras.webp"]
   }
 ];
 

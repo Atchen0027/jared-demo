@@ -15,8 +15,8 @@ export const categories = [
     ],
     priceNote: "3 por 10€ (o 3,80€ / unidad)",
     badge: "Promoción Especial 3x10€",
-    image: withBase("/images/posters/catalogo-jabones-glicerina.jpg"),
-    secondaryImage: withBase("/images/posters/ducha-3-jabones-10e.jpg"),
+    image: withBase("/images/posters/catalogo-jabones-glicerina.webp"),
+    secondaryImage: withBase("/images/posters/ducha-3-jabones-10e.webp"),
     ctaText: "Ver Jabones Artesanales"
   },
   {
@@ -33,7 +33,7 @@ export const categories = [
     ],
     priceNote: "Tarro 250g por sólo 6,00€",
     badge: "Tarro 250g por sólo 6€",
-    image: withBase("/images/posters/exfoliantes-corporales-tarros.jpg"),
+    image: withBase("/images/posters/exfoliantes-corporales-tarros.webp"),
     ctaText: "Ver Jabones Exfoliantes"
   },
   {
@@ -50,7 +50,7 @@ export const categories = [
     ],
     priceNote: "Tratamientos botánicos desde 11,00€",
     badge: "100% Natural & Canarias",
-    image: withBase("/images/products/crema-karite-vainilla.jpg"),
+    image: withBase("/images/products/crema-karite-vainilla.webp"),
     ctaText: "Ver Cremas y Mantecas"
   }
 ];

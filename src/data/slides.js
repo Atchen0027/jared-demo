@@ -10,7 +10,7 @@ export const slides = [
     ctaLink: "#catalogo",
     filterCategory: "all",
     badge: "Promoción Especial 3 x 10€",
-    image: withBase("/images/hero/hero-spa-artesanal.jpg"),
+    image: withBase("/images/hero/hero-spa-artesanal.webp"),
     alt: "Bodegón spa artesanal con jabones de glicerina Nubeterapia"
   },
   {
@@ -22,7 +22,7 @@ export const slides = [
     ctaLink: "#catalogo",
     filterCategory: "jabones-artesanales",
     badge: "Solo 30€ • Edición Especial",
-    image: withBase("/images/posters/caja-regalo-8-jabones.jpg"),
+    image: withBase("/images/posters/caja-regalo-8-jabones.webp"),
     alt: "Caja de regalo Nubeterapia con 8 jabones de glicerina"
   },
   {
@@ -34,7 +34,7 @@ export const slides = [
     ctaLink: "#catalogo",
     filterCategory: "jabones-exfoliantes",
     badge: "Por sólo 6€ el tarro",
-    image: withBase("/images/posters/exfoliantes-corporales-tarros.jpg"),
+    image: withBase("/images/posters/exfoliantes-corporales-tarros.webp"),
     alt: "Colección de exfoliantes corporales artesanales en tarro"
   },
   {
@@ -46,7 +46,7 @@ export const slides = [
     ctaLink: "#catalogo",
     filterCategory: "jabones-artesanales",
     badge: "Pack 2 unidades por 10€",
-    image: withBase("/images/posters/jabon-masajeador-mango-xxl.jpg"),
+    image: withBase("/images/posters/jabon-masajeador-mango-xxl.webp"),
     alt: "Jabón masajeador XXL de mango con semillas de amapola"
   }
 ];

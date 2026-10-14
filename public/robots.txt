@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://atchen0027.github.io/jared-demo/sitemap-index.xml

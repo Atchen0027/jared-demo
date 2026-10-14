@@ -46,37 +46,39 @@ const testimonials = [
       </p>
     </div>
 
-    <div class="testimonials-grid">
-      {testimonials.map((item) => (
-        <article class="testimonial-card">
-          <div class="testimonial-card-top">
-            <div class="stars-row" aria-label={`Valoración: ${item.rating} de 5 estrellas`}>
-              {Array.from({ length: item.rating }).map(() => (
-                <span class="star-icon">★</span>
-              ))}
-            </div>
-            <span class="verified-tag">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              Verificado
-            </span>
-          </div>
+    <div class="testimonials-marquee">
+      <div class="testimonials-track">
+        {[false, true].map((isClone) =>
+          testimonials.map((item) => (
+            <article class="testimonial-card" aria-hidden={isClone ? 'true' : undefined}>
+              <div class="testimonial-card-top">
+                <div class="stars-row" aria-label={`Valoración: ${item.rating} de 5 estrellas`}>
+                  {Array.from({ length: item.rating }).map(() => (
+                    <span class="star-icon">★</span>
+                  ))}
+                </div>
+                <span class="verified-tag">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  Verificado
+                </span>
+              </div>
 
-          <p class="testimonial-comment">
-            «{item.comment}»
-          </p>
+              <p class="testimonial-comment">«{item.comment}»</p>
 
-          <div class="testimonial-footer">
-            <div class="client-avatar" aria-hidden="true">{item.avatarText}</div>
-            <div class="client-info">
-              <span class="client-name">{item.name}</span>
-              <span class="client-meta">{item.location} • <small>{item.date}</small></span>
-              <span class="client-product">🌿 {item.product}</span>
-            </div>
-          </div>
-        </article>
-      ))}
+              <div class="testimonial-footer">
+                <div class="client-avatar" aria-hidden="true">{item.avatarText}</div>
+                <div class="client-info">
+                  <span class="client-name">{item.name}</span>
+                  <span class="client-meta">{item.location} • <small>{item.date}</small></span>
+                  <span class="client-product">🌿 {item.product}</span>
+                </div>
+              </div>
+            </article>
+          ))
+        )}
+      </div>
     </div>
   </div>
 </section>
@@ -132,15 +134,57 @@ const testimonials = [
     line-height: 1.6;
   }
 
-  .testimonials-grid {
+  .testimonials-marquee {
+    --marquee-gap: 1.75rem;
+    overflow: visible;
+  }
+
+  .testimonials-track {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.75rem;
+    gap: var(--marquee-gap);
   }
 
   @media (min-width: 768px) {
-    .testimonials-grid {
-      grid-template-columns: repeat(3, 1fr);
+    .testimonials-marquee {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    }
+
+    .testimonials-track {
+      display: flex;
+      width: max-content;
+      gap: var(--marquee-gap);
+      animation: testimonialsMarquee 55s linear infinite;
+    }
+
+    .testimonials-track:hover {
+      animation-play-state: paused;
+    }
+
+    .testimonial-card {
+      flex: 0 0 368px;
+      width: 368px;
+    }
+  }
+
+  .testimonial-card:nth-child(n + 4) {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-card:nth-child(n + 4) {
+      display: flex;
+    }
+  }
+
+  @keyframes testimonialsMarquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-50% - (var(--marquee-gap) / 2)));
     }
   }
 
@@ -244,6 +288,25 @@ const testimonials = [
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /* Accesibilidad: sin marquesina si el usuario reduce el movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    .testimonials-track {
+      animation: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      width: auto;
+    }
+
+    .testimonial-card {
+      flex: none;
+      width: auto;
+    }
+
+    .testimonial-card:nth-child(n + 4) {
+      display: none;
+    }
   }
 
   /* Responsive Móvil */

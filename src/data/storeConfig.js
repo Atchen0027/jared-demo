@@ -29,7 +29,7 @@ export const storeConfig = {
     description: "Descubre el descanso que tu piel merece con nuestros jabones de glicerina y cosmética botánica artesanal. Aplica el cupón al tramitar tu pedido por WhatsApp y recibe además un jaboncito de muestra de regalo.",
     code: "NUBETEMPORADA",
     discountBadge: "-15% DTO",
-    image: "/images/products/caja-regalo-artesanal.jpg",
+    image: "/images/products/caja-regalo-artesanal.webp",
     ctaText: "Aprovechar Oferta"
   }
 };

@@ -1,7 +1,16 @@
 import { products } from '../data/products.js';
 import { categories } from '../data/categories.js';
 import { storeConfig } from '../data/storeConfig.js';
-import { slides } from '../data/slides.js';
+import {
+  addItemToCart,
+  updateItemQuantity,
+  removeItemFromCart,
+  calculateTotals,
+} from '../lib/cart.js';
+import { matchesFilters, compareBySort } from '../lib/filters.js';
+import { readJSON, writeJSON } from '../lib/storage.js';
+import { createFocusTrap } from '../lib/focus-trap.js';
+import { initMotion, animateGridIn, flyToCart, bump } from './motion.js';
 
 // =============================================================================
 // NUBETERAPIA - APLICACIÓN DE TIENDA DEMO (CONTROLLER PRINCIPAL)
@@ -41,9 +50,26 @@ class NubeterapiaShop {
     this.initGlobalTriggers();
     this.initScrollReveal();
     this.initBackToTop();
+    this.initHeaderScrollState();
 
     // Render inicial del carrito
     this.renderCart();
+
+    // Capa de movimiento (GSAP). Si falla, la web sigue funcionando igual.
+    try {
+      initMotion();
+    } catch (e) {
+      console.warn('Movimiento no disponible', e);
+    }
+
+    // Entrada animada inicial del catálogo
+    const grid = document.getElementById('products-grid');
+    if (grid) {
+      const visible = Array.from(grid.querySelectorAll('.product-card')).filter(
+        (c) => c.style.display !== 'none'
+      );
+      animateGridIn(visible, { stagger: 0.03, y: 20 });
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -179,7 +205,6 @@ class NubeterapiaShop {
     if (cards.length === 0) return;
 
     let currentCardIndex = 0;
-    let isTicking = false;
 
     // Actualiza indicadores visuales (pestañas y barra de progreso)
     const updateIndicators = (newIndex) => {
@@ -534,35 +559,29 @@ class NubeterapiaShop {
     const cards = Array.from(grid.querySelectorAll('.product-card'));
     let visibleCount = 0;
 
-    // Filtrar y ordenar
-    const sortedCards = [...cards].sort((a, b) => {
-      const priceA = parseFloat(a.getAttribute('data-price') || '0');
-      const priceB = parseFloat(b.getAttribute('data-price') || '0');
-      const nameA = a.getAttribute('data-name') || '';
-      const nameB = b.getAttribute('data-name') || '';
-      const featA = a.getAttribute('data-featured') === 'true' ? 1 : 0;
-      const featB = b.getAttribute('data-featured') === 'true' ? 1 : 0;
-
-      if (this.sortBy === 'price-asc') return priceA - priceB;
-      if (this.sortBy === 'price-desc') return priceB - priceA;
-      if (this.sortBy === 'name-asc') return nameA.localeCompare(nameB);
-      // 'featured'
-      if (featB !== featA) return featB - featA;
-      return priceA - priceB;
+    // Extrae los atributos del producto desde su tarjeta del DOM
+    const cardAttrs = (card) => ({
+      category: card.getAttribute('data-category'),
+      price: parseFloat(card.getAttribute('data-price') || '0'),
+      name: card.getAttribute('data-name') || '',
+      stock: card.getAttribute('data-stock') === 'true',
+      featured: card.getAttribute('data-featured') === 'true',
     });
 
+    const filterState = {
+      category: this.activeCategory,
+      query: this.searchQuery,
+      maxPrice: this.maxPrice,
+      stockOnly: this.stockOnly,
+    };
+
+    // Filtrar y ordenar (lógica pura y testeable en src/lib/filters.js)
+    const sortedCards = [...cards].sort((a, b) =>
+      compareBySort(cardAttrs(a), cardAttrs(b), this.sortBy)
+    );
+
     sortedCards.forEach((card) => {
-      const pCat = card.getAttribute('data-category');
-      const pPrice = parseFloat(card.getAttribute('data-price') || '0');
-      const pName = (card.getAttribute('data-name') || '').toLowerCase();
-      const pStock = card.getAttribute('data-stock') === 'true';
-
-      const matchCat = (this.activeCategory === 'all') || (pCat === this.activeCategory);
-      const matchPrice = pPrice <= this.maxPrice;
-      const matchStock = !this.stockOnly || pStock;
-      const matchSearch = !this.searchQuery || pName.includes(this.searchQuery);
-
-      const isVisible = matchCat && matchPrice && matchStock && matchSearch;
+      const isVisible = matchesFilters(cardAttrs(card), filterState);
 
       if (isVisible) {
         card.style.display = 'flex';
@@ -605,6 +624,10 @@ class NubeterapiaShop {
     if (resetBtn) {
       resetBtn.style.display = isFiltered ? 'inline-flex' : 'none';
     }
+
+    // Animación de entrada de las tarjetas visibles tras filtrar/ordenar
+    const visibleCards = sortedCards.filter((card) => card.style.display !== 'none');
+    animateGridIn(visibleCards, { stagger: 0.028, y: 16 });
   }
 
   // ---------------------------------------------------------------------------
@@ -685,7 +708,7 @@ class NubeterapiaShop {
     if (this.modalAddCartBtn) {
       this.modalAddCartBtn.addEventListener('click', () => {
         if (this.activeProduct) {
-          this.addToCart(this.activeProduct.id, this.activeModalQty, this.selectedVariant);
+          this.addToCart(this.activeProduct.id, this.activeModalQty, this.selectedVariant, this.modalImage || this.modalAddCartBtn);
           this.closeProductModal();
           this.openCart();
         }
@@ -903,6 +926,9 @@ class NubeterapiaShop {
     this.modalBackdrop.classList.add('is-active');
     this.modal.classList.add('is-active');
     document.body.style.overflow = 'hidden';
+
+    this.releaseProductModalTrap?.();
+    this.releaseProductModalTrap = createFocusTrap(this.modal);
   }
 
   closeProductModal() {
@@ -910,6 +936,8 @@ class NubeterapiaShop {
     this.modalBackdrop.classList.remove('is-active');
     this.modal.classList.remove('is-active');
     document.body.style.overflow = '';
+    this.releaseProductModalTrap?.();
+    this.releaseProductModalTrap = null;
     this.activeProduct = null;
     this.selectedVariant = null;
   }
@@ -929,23 +957,14 @@ class NubeterapiaShop {
   // 4. CARRITO DE COMPRA (LOCALSTORAGE + DRAWER)
   // ---------------------------------------------------------------------------
   loadCart() {
-    try {
-      const saved = localStorage.getItem('nubeterapia_cart_v1');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
+    return readJSON('nubeterapia_cart_v1', []);
   }
 
   saveCart() {
-    try {
-      localStorage.setItem('nubeterapia_cart_v1', JSON.stringify(this.cart));
-    } catch (e) {
-      console.warn('No se pudo guardar en localStorage', e);
-    }
+    writeJSON('nubeterapia_cart_v1', this.cart);
   }
 
-  addToCart(productId, qty = 1, chosenVariant = null) {
+  addToCart(productId, qty = 1, chosenVariant = null, originEl = null) {
     const product = products.find((p) => p.id === productId);
     if (!product) return;
 
@@ -957,47 +976,26 @@ class NubeterapiaShop {
       price: product.price
     });
 
-    const cartItemId = `${product.id}__${variant.id}`;
-    const existing = this.cart.find((item) => (item.cartItemId || item.id) === cartItemId);
-
-    if (existing) {
-      existing.quantity += qty;
-    } else {
-      this.cart.push({
-        id: cartItemId,
-        cartItemId: cartItemId,
-        productId: product.id,
-        name: product.name,
-        variantId: variant.id,
-        variantName: variant.label,
-        weight: variant.weight,
-        price: variant.price,
-        image: product.image,
-        categoryName: product.categoryName,
-        quantity: qty
-      });
-    }
+    this.cart = addItemToCart(this.cart, product, variant, qty);
 
     this.saveCart();
     this.renderCart();
     this.showToast(`✨ Añadido: ${product.name} [${variant.label}] (x${qty})`);
+
+    // Microinteracciones: imagen que vuela al carrito + rebote del contador
+    const cartTarget = document.getElementById('open-cart-btn');
+    flyToCart({ originEl, imageUrl: product.image, targetEl: cartTarget });
+    bump(document.getElementById('header-cart-count'));
   }
 
   updateQuantity(itemId, delta) {
-    const index = this.cart.findIndex((item) => (item.cartItemId || item.id) === itemId);
-    if (index === -1) return;
-
-    this.cart[index].quantity += delta;
-    if (this.cart[index].quantity <= 0) {
-      this.cart.splice(index, 1);
-    }
-
+    this.cart = updateItemQuantity(this.cart, itemId, delta);
     this.saveCart();
     this.renderCart();
   }
 
   removeFromCart(itemId) {
-    this.cart = this.cart.filter((item) => (item.cartItemId || item.id) !== itemId);
+    this.cart = removeItemFromCart(this.cart, itemId);
     this.saveCart();
     this.renderCart();
   }
@@ -1010,30 +1008,7 @@ class NubeterapiaShop {
   }
 
   calculateTotals() {
-    let subtotal = 0;
-    let totalItems = 0;
-
-    this.cart.forEach((item) => {
-      subtotal += item.price * item.quantity;
-      totalItems += item.quantity;
-    });
-
-    // Redondeo monetario seguro a 2 decimales
-    subtotal = Math.round(subtotal * 100) / 100;
-
-    const freeThreshold = storeConfig.shipping.freeShippingThreshold;
-    const isFreeShipping = subtotal >= freeThreshold;
-    const shipping = subtotal > 0 ? (isFreeShipping ? 0 : storeConfig.shipping.standardFee) : 0;
-    const finalTotal = Math.round((subtotal + shipping) * 100) / 100;
-
-    return {
-      subtotal,
-      shipping,
-      isFreeShipping,
-      finalTotal,
-      totalItems,
-      missingForFreeShipping: Math.max(0, Math.round((freeThreshold - subtotal) * 100) / 100)
-    };
+    return calculateTotals(this.cart, storeConfig.shipping);
   }
 
   renderCart() {
@@ -1180,6 +1155,8 @@ class NubeterapiaShop {
     this.cartBackdrop.classList.add('is-active');
     this.cartDrawer.classList.add('is-active');
     document.body.style.overflow = 'hidden';
+    this.releaseCartTrap?.();
+    this.releaseCartTrap = createFocusTrap(this.cartDrawer);
   }
 
   closeCart() {
@@ -1187,6 +1164,8 @@ class NubeterapiaShop {
     this.cartBackdrop.classList.remove('is-active');
     this.cartDrawer.classList.remove('is-active');
     document.body.style.overflow = '';
+    this.releaseCartTrap?.();
+    this.releaseCartTrap = null;
   }
 
   // ---------------------------------------------------------------------------
@@ -1292,12 +1271,16 @@ class NubeterapiaShop {
 
     this.waBackdrop.classList.add('is-active');
     this.waModal.classList.add('is-active');
+    this.releaseWhatsAppTrap?.();
+    this.releaseWhatsAppTrap = createFocusTrap(this.waModal);
   }
 
   closeWhatsAppPreview() {
     if (!this.waModal) return;
     this.waBackdrop.classList.remove('is-active');
     this.waModal.classList.remove('is-active');
+    this.releaseWhatsAppTrap?.();
+    this.releaseWhatsAppTrap = null;
   }
 
   // ---------------------------------------------------------------------------
@@ -1319,6 +1302,8 @@ class NubeterapiaShop {
       adminBackdrop.classList.add('is-active');
       adminModal.classList.add('is-active');
       document.body.style.overflow = 'hidden';
+      this.releaseAdminTrap?.();
+      this.releaseAdminTrap = createFocusTrap(adminModal);
     };
 
     const closeAdmin = () => {
@@ -1326,6 +1311,8 @@ class NubeterapiaShop {
       adminBackdrop.classList.remove('is-active');
       adminModal.classList.remove('is-active');
       document.body.style.overflow = '';
+      this.releaseAdminTrap?.();
+      this.releaseAdminTrap = null;
     };
 
     triggers.forEach(btn => {
@@ -1472,6 +1459,13 @@ class NubeterapiaShop {
       navPanel.classList.toggle('is-active', open);
       navBackdrop.classList.toggle('is-active', open);
       document.body.style.overflow = open ? 'hidden' : '';
+      if (open) {
+        this.releaseNavTrap?.();
+        this.releaseNavTrap = createFocusTrap(navPanel);
+      } else {
+        this.releaseNavTrap?.();
+        this.releaseNavTrap = null;
+      }
     };
 
     if (openBtn) openBtn.addEventListener('click', () => toggleNav(true));
@@ -1502,7 +1496,7 @@ class NubeterapiaShop {
       if (addBtn) {
         const id = addBtn.getAttribute('data-add-to-cart');
         if (id) {
-          this.addToCart(id, 1);
+          this.addToCart(id, 1, null, addBtn);
         }
         return;
       }
@@ -1640,12 +1634,16 @@ class NubeterapiaShop {
     if (!this.promoModal || !this.promoBackdrop) return;
     this.promoBackdrop.classList.add('is-active');
     this.promoModal.classList.add('is-active');
+    this.releasePromoTrap?.();
+    this.releasePromoTrap = createFocusTrap(this.promoModal);
   }
 
   closeSeasonalPromo() {
     if (!this.promoModal || !this.promoBackdrop) return;
     this.promoBackdrop.classList.remove('is-active');
     this.promoModal.classList.remove('is-active');
+    this.releasePromoTrap?.();
+    this.releasePromoTrap = null;
     sessionStorage.setItem('nubeterapia_promo_dismissed', 'true');
   }
 
@@ -1686,6 +1684,29 @@ class NubeterapiaShop {
 
     const targets = document.querySelectorAll('.reveal-on-scroll, .about-us-section, .custom-events-card, .benefits-section, .testimonials-section, .category-card');
     targets.forEach(el => observer.observe(el));
+  }
+
+  initHeaderScrollState() {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+
+    let ticking = false;
+    const update = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 24);
+      ticking = false;
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+    update();
   }
 
   initBackToTop() {
