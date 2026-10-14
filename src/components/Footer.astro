@@ -1,8 +1,10 @@
 ---
 import { storeConfig } from '../data/storeConfig.js';
+import SectionDivider from './SectionDivider.astro';
 ---
 
 <footer class="site-footer" id="contacto">
+  <SectionDivider fill="#FFFFFF" height={64} />
   <div class="container footer-main-content">
     <div class="footer-grid">
       <!-- 1 ARRIBA: Marca, Lema y Filosofía Canaria (Ancho Completo en móvil) -->
@@ -116,7 +118,6 @@ import { storeConfig } from '../data/storeConfig.js';
     background-color: #211D19;
     color: #D4CBC0;
     margin-top: auto;
-    border-top: 1px solid #332C26;
   }
 
   .footer-main-content {

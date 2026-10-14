@@ -1,0 +1,32 @@
+---
+// Separador orgánico reutilizable (ola SVG).
+// - `fill`: color de la ola (normalmente el de la sección vecina).
+// - `flip`: rota la ola 180° para que el relleno quede abajo en vez de arriba.
+// - `height`: alto del separador en px.
+const { fill = '#FFFFFF', flip = false, height = 80 } = Astro.props;
+---
+
+<div class="section-divider" style={`--sd-height:${height}px;`} aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class={flip ? 'is-flipped' : ''}>
+    <path
+      d="M0,0 L1440,0 L1440,36 C1240,60 1060,16 820,34 C580,52 400,12 180,36 C120,42 60,40 0,50 Z"
+      style={`fill:${fill}`}></path>
+  </svg>
+</div>
+
+<style>
+  .section-divider {
+    width: 100%;
+    line-height: 0;
+  }
+
+  .section-divider svg {
+    display: block;
+    width: 100%;
+    height: var(--sd-height, 80px);
+  }
+
+  .section-divider svg.is-flipped {
+    transform: rotate(180deg);
+  }
+</style>
