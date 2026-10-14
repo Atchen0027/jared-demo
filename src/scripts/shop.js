@@ -39,6 +39,8 @@ class NubeterapiaShop {
     this.initAdminPanelDemo();
     this.initMobileNav();
     this.initGlobalTriggers();
+    this.initScrollReveal();
+    this.initBackToTop();
 
     // Render inicial del carrito
     this.renderCart();
@@ -1662,6 +1664,52 @@ class NubeterapiaShop {
     if (codeEl && promo.code) codeEl.textContent = promo.code;
     if (discountEl && promo.discountBadge) discountEl.textContent = promo.discountBadge;
     if (ctaEl && promo.ctaText) ctaEl.textContent = promo.ctaText;
+  }
+
+  // ---------------------------------------------------------------------------
+  // 9. ANIMACIONES SCROLL REVEAL Y VOLVER ARRIBA
+  // ---------------------------------------------------------------------------
+  initScrollReveal() {
+    if (typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.1
+    });
+
+    const targets = document.querySelectorAll('.reveal-on-scroll, .about-us-section, .custom-events-card, .benefits-section, .testimonials-section, .category-card');
+    targets.forEach(el => observer.observe(el));
+  }
+
+  initBackToTop() {
+    const btn = document.getElementById('back-to-top-btn');
+    if (!btn) return;
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (window.scrollY > 400) {
+            btn.classList.add('is-active');
+          } else {
+            btn.classList.remove('is-active');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   showToast(message) {

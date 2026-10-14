@@ -11,6 +11,7 @@ import WhatsAppPreviewModal from '../components/WhatsAppPreviewModal.astro';
 import SeasonalPromoModal from '../components/SeasonalPromoModal.astro';
 import AdminPanelModal from '../components/AdminPanelModal.astro';
 import BenefitsBanner from '../components/BenefitsBanner.astro';
+import Testimonials from '../components/Testimonials.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
@@ -117,12 +118,22 @@ const schemaOrgData = {
       <!-- 6. Quiénes Somos (Nuestra Esencia y Obrador Artesanal) -->
       <AboutUs />
 
-      <!-- 7. Pilares de Calidad y Artesanía -->
+      <!-- 7. Opiniones de Clientes Verificados (Testimonios) -->
+      <Testimonials />
+
+      <!-- 8. Pilares de Calidad y Artesanía -->
       <BenefitsBanner />
     </main>
 
-    <!-- 7. Pie de Página -->
+    <!-- 9. Pie de Página -->
     <Footer />
+
+    <!-- Botón Volver Arriba -->
+    <button type="button" class="back-to-top-btn" id="back-to-top-btn" aria-label="Volver arriba de la página" title="Volver arriba">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
 
     <!-- Componentes de Interacción Modal, Drawer y Panel Demo -->
     <ProductModal />

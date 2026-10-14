@@ -1,0 +1,267 @@
+---
+const testimonials = [
+  {
+    name: "Laura Mendoza",
+    location: "Santa Cruz de Tenerife",
+    rating: 5,
+    product: "Jabón de Lavanda Silvestre",
+    date: "Hace 3 días",
+    comment: "Tengo la piel atópica y casi cualquier jabón comercial me picaba. Este de lavanda es una auténtica maravilla: deja la piel calmada, hidratada y el olor floral que deja en el baño es pura aromaterapia.",
+    avatarText: "LM"
+  },
+  {
+    name: "Carlos Delgado",
+    location: "San Cristóbal de La Laguna",
+    rating: 5,
+    product: "Pack 3x10€ (Miel, Cúrcuma y Arroz)",
+    date: "Hace 1 semana",
+    comment: "Aproveché la promo de 3 por 10€ y el trato por WhatsApp fue de 10. Me aconsejaron según mi piel mixta y el envío en Tenerife me llegó al día siguiente. Se nota muchísimo la calidad artesanal.",
+    avatarText: "CD"
+  },
+  {
+    name: "Marina Perdomo",
+    location: "Las Palmas de Gran Canaria",
+    rating: 5,
+    product: "Exfoliante Corporal Miel & Cúrcuma",
+    date: "Hace 2 semanas",
+    comment: "El grano de azúcar con la manteca de karité deja la piel como seda. No necesitas ponerte crema hidratante después porque sales de la ducha nutrida al 100%. Repetiré seguro.",
+    avatarText: "MP"
+  }
+];
+---
+
+<section class="testimonials-section reveal-on-scroll" id="testimonios" aria-label="Opiniones de clientes verificados">
+  <div class="container">
+    <div class="testimonials-header">
+      <div class="testimonials-rating-pill">
+        <div class="pill-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <span class="pill-text"><strong>4.9 / 5</strong> • Más de 240 clientes felices</span>
+      </div>
+
+      <h2 class="testimonials-title">Lo que sienten quienes ya cuidan su piel con Nubeterapia</h2>
+      <p class="testimonials-subtitle">
+        Opiniones reales de clientas y clientes que han transformado su ducha diaria en un ritual de desconexión.
+      </p>
+    </div>
+
+    <div class="testimonials-grid">
+      {testimonials.map((item) => (
+        <article class="testimonial-card">
+          <div class="testimonial-card-top">
+            <div class="stars-row" aria-label={`Valoración: ${item.rating} de 5 estrellas`}>
+              {Array.from({ length: item.rating }).map(() => (
+                <span class="star-icon">★</span>
+              ))}
+            </div>
+            <span class="verified-tag">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Verificado
+            </span>
+          </div>
+
+          <p class="testimonial-comment">
+            «{item.comment}»
+          </p>
+
+          <div class="testimonial-footer">
+            <div class="client-avatar" aria-hidden="true">{item.avatarText}</div>
+            <div class="client-info">
+              <span class="client-name">{item.name}</span>
+              <span class="client-meta">{item.location} • <small>{item.date}</small></span>
+              <span class="client-product">🌿 {item.product}</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    padding: 5rem 0;
+    background-color: var(--color-cream-subtle);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .testimonials-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .testimonials-rating-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    padding: 0.35rem 0.95rem;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-xs);
+    margin-bottom: 1.25rem;
+  }
+
+  .pill-stars {
+    color: var(--color-gold);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+  }
+
+  .pill-text {
+    font-size: 0.8rem;
+    color: var(--color-text-main);
+  }
+
+  .testimonials-title {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    color: var(--color-text-main);
+    line-height: 1.22;
+    margin-bottom: 0.85rem;
+  }
+
+  .testimonials-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-text-body);
+    line-height: 1.6;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .testimonial-card {
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.75rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .testimonial-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.15rem;
+  }
+
+  .stars-row {
+    color: var(--color-gold);
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+  }
+
+  .verified-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: rgba(86, 110, 83, 0.12);
+    color: var(--color-sage);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+  }
+
+  .testimonial-comment {
+    font-size: 0.925rem;
+    line-height: 1.65;
+    color: var(--color-text-body);
+    font-style: italic;
+    margin-bottom: 1.75rem;
+    flex: 1;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .client-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: var(--color-sand);
+    color: var(--color-text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .client-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .client-name {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+  }
+
+  .client-meta {
+    font-size: 0.76rem;
+    color: var(--color-text-muted);
+  }
+
+  .client-product {
+    font-size: 0.75rem;
+    color: var(--color-sage);
+    font-weight: 600;
+    margin-top: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Responsive Móvil */
+  @media (max-width: 767px) {
+    .testimonials-section {
+      padding: 3.5rem 0;
+    }
+
+    .testimonials-title {
+      font-size: 1.6rem;
+    }
+
+    .testimonials-header {
+      margin-bottom: 2.25rem;
+    }
+
+    .testimonial-card {
+      padding: 1.5rem 1.25rem;
+    }
+  }
+</style>
